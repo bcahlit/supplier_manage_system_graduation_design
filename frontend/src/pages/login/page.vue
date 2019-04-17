@@ -38,27 +38,19 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="code">
-                  <el-input type="text" v-model="formLogin.code" placeholder="- - - -">
-                    <template slot="prepend">验证码</template>
-                    <template slot="append">
-                      <img class="login-code" src="./image/login-code.png">
-                    </template>
-                  </el-input>
-                </el-form-item>
                 <el-button size="default" @click="submit" type="primary" class="button-login">登录</el-button>
               </el-form>
             </el-card>
-            <p
+            <!-- <p
               class="page-login--options"
               flex="main:justify cross:center">
               <span><d2-icon name="question-circle"/> 忘记密码</span>
               <span>注册用户</span>
-            </p>
+            </p> -->
             <!-- 快速登录按钮 -->
-            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
+            <!-- <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
               快速选择用户（测试功能）
-            </el-button>
+            </el-button> -->
           </div>
         </div>
         <div class="page-login--content-footer">
@@ -66,9 +58,6 @@
             <a href="#">帮助</a>
             <a href="#">隐私</a>
             <a href="#">条款</a>
-          </p>
-          <p class="page-login--content-footer-copyright">
-            Copyright <d2-icon name="copyright"/> 2018 D2 Projects 开源组织出品 <a href="https://github.com/FairyEver">@FairyEver</a>
           </p>
         </div>
       </div>
@@ -92,6 +81,8 @@
 <script>
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
+import { UserInfo } from '@/api/me'
+
 export default {
   data () {
     return {
@@ -118,9 +109,8 @@ export default {
       ],
       // 表单
       formLogin: {
-        username: 'admin',
-        password: 'admin',
-        code: 'v9am'
+        user_name: '',
+        password: ''
       },
       // 校验
       rules: {
@@ -176,8 +166,18 @@ export default {
             password: this.formLogin.password
           })
             .then(() => {
-              // 重定向对象不存在则返回顶层路径
-              this.$router.replace(this.$route.query.redirect || '/')
+              UserInfo({})
+                .then(res => {
+                  console.log(res)
+                  let uName = res.user_name
+                  delete res.user_name
+                  this.$store.dispatch('d2admin/user/set', {
+                    name: uName,
+                    ...res
+                  })
+                  // 重定向对象不存在则返回顶层路径
+                  this.$router.replace(this.$route.query.redirect || '/')
+                })
             })
         } else {
           // 登录表单校验失败
