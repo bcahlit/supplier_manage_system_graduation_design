@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_100413) do
+ActiveRecord::Schema.define(version: 2019_04_17_143123) do
+
+  create_table "notes", force: :cascade do |t|
+    t.string "title"
+    t.string "context"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notes_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "user_name", null: false
@@ -19,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_100413) do
     t.string "real_name"
     t.string "password_digest"
     t.string "title"
-    t.string "phone"
+    t.string "phone", null: false
     t.integer "level", default: 0
     t.string "sex"
     t.datetime "created_at", null: false

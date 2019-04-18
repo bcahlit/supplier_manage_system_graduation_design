@@ -9,5 +9,6 @@ export default [
       { path: '/demo/page2', title: '页面 2' },
       { path: '/demo/page3', title: '页面 3' }
     ]
-  }
+  },
+  { path: '/note', title: '便签', icon: 'sticky-note-o' }
 ]

@@ -43,6 +43,15 @@ const frameIn = [
           },
           render: h => h()
         }
+      },
+      {
+        path: '/note',
+        name: 'note',
+        component: () => import('@/pages/note'),
+        meta: {
+          auth: true, 
+          title: '便笺'
+        }
       }
     ]
   },

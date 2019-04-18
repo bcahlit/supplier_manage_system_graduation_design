@@ -16,7 +16,7 @@ class NotesController < ApplicationController
 
   # POST /notes
   def create
-    @note = current_user.todos.build(note_params)
+    @note = current_user.notes.build(note_params)
 
     if @note.save
       render json: @note, status: :created, location: @note
@@ -47,6 +47,6 @@ class NotesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def note_params
-      params.fetch(:note, {})
+      params.permit(:title, :context)
     end
 end

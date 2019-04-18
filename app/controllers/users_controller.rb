@@ -10,8 +10,7 @@ class UsersController < ApplicationController
   end
 
   def me
-    json_response current_user.as_json(only: [:user_name, :qq, :wechat, :real_name,
-                                              :title, :phone, :level, :sex,])
+    json_response current_user
   end
 
 
