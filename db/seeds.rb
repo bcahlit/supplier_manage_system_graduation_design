@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+user = User.create({user_name: "admin", phone: "18766653491", password: "admin", password_confirmation: "admin"})
+50.times do
+  user.notes.create!(title: Faker::Lorem.word, context: Faker::Lorem.sentence)
+end

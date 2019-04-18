@@ -21,6 +21,7 @@ gem 'faker'
 gem 'rolify'
 gem 'cancancan'
 gem 'rack-cors'
+gem 'cancancan'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'will_paginate', '~> 3.1.0'
 # Use ActiveStorage variant
