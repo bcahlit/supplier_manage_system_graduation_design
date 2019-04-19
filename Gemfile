@@ -16,6 +16,7 @@ gem 'puma', '~> 3.11'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 # self used gem
+gem 'kaminari'
 gem 'jwt'
 gem 'faker'
 gem 'rolify'
@@ -23,7 +24,7 @@ gem 'cancancan'
 gem 'rack-cors'
 gem 'cancancan'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'will_paginate', '~> 3.1.0'
+# gem 'will_paginate', '~> 3.1.0'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

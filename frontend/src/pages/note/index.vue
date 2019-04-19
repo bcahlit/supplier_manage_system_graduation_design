@@ -10,6 +10,11 @@
       @dialog-open="handleDialogOpen"
       @row-add="handleRowAdd"
       @dialog-cancel="handleDialogCancel"
+      :loading="loading"
+      :pagination="pagination"
+      :rowHandle="rowHandle"
+      @row-remove="handleRowRemove"
+      @pagination-current-change="paginationCurrentChange"
       style="padding: 5px">
       <el-button slot="header" @click="addRow">新增</el-button>
     </d2-crud>
@@ -17,7 +22,7 @@
 </template>
 
 <script>
-import { getNotes, addNotes } from '@/api/notes'
+import { getNotes, addNotes, deleteNote } from '@/api/notes'
 export default {
   data () {
     return {
@@ -36,6 +41,12 @@ export default {
         }
       ],
       data: [],
+      loading: false,
+      pagination: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 6
+      },
       addTemplate: {
         title: {
           title: '标题',
@@ -50,24 +61,70 @@ export default {
         labelWidth: '80px',
         labelPosition: 'left',
         saveLoading: false
+      },
+      rowHandle: {
+        width: '150',
+        remove: {
+          icon: 'el-icon-delete',
+          size: 'small',
+          fixed: 'right',
+          confirm: true,
+          show (index, row) {
+            // if (row.showRemoveButton) {
+            return true
+            // }
+            // return false
+          },
+          disabled (index, row) {
+            // if (row.forbidRemove) {
+            //   return true
+            // }
+            return false
+          }
+        }
       }
     }
   },
   mounted () {
-    getNotes({}).then(res => {
-      console.log(res)
-      this.data = res
-    }).catch(err => {
-      console.log(err)
-    })
-    console.log(this.$refs.d2Crud.d2CrudData) // 获取表格数据
+    this.fetchData()
   },
   methods: {
+    handleRowRemove ({ index, row }, done) {
+        deleteNote({id: row.id}).then(res => {
+          console.log(res)
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          done()
+          this.fetchData()
+        })
+        // console.log(index)
+    },
     handleDialogOpen ({ mode }) {
       this.$message({
         message: '打开新增，模式为：' + mode,
         type: 'success'
       })
+    },
+    paginationCurrentChange (currentPage) {
+      // console.log(currentPage)
+      this.pagination.currentPage = currentPage
+      this.fetchData()
+    },
+    fetchData () {
+      this.loading = true
+      getNotes({ 'page': this.pagination.currentPage }).then(res => {
+        // console.log(res)
+        this.data = res.notes
+        this.pagination.pageSize = res.pageSize
+        this.pagination.total = res.total
+        this.loading = false
+      }).catch(err => {
+        this.loading = false
+        console.log(err)
+      })
+    // console.log(this.$refs.d2Crud.d2CrudData) // 获取表格数据
     },
     // 普通的新增
     addRow () {
@@ -76,9 +133,10 @@ export default {
       })
     },
     handleRowAdd (row, done) {
+      // console.log(row)
       this.formOptions.saveLoading = true
       addNotes(row).then(res => {
-        console.log(res)
+        // console.log(res)
         this.$message({
           message: '保存成功',
           type: 'success'

@@ -4,9 +4,8 @@ class NotesController < ApplicationController
 
   # GET /notes
   def index
-    @notes = current_user.notes
-
-    render json: @notes
+    @notes = current_user.notes.page(params[:page] || 1)
+    render json: {notes: @notes, currentPage: @notes.current_page, pageSize: @notes.count, total:  current_user.notes.count}
   end
 
   # GET /notes/1
