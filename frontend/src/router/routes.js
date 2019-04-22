@@ -43,16 +43,20 @@ const frameIn = [
           },
           render: h => h()
         }
-      },
-      {
-        path: '/note',
-        name: 'note',
-        component: () => import('@/pages/note'),
-        meta: {
-          auth: true, 
-          title: '便笺'
-        }
       }
+    ]
+  },
+  {
+    path: '/office',
+    name: 'office',
+    auth: true,
+    redirect: { name: 'schedule' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'schedule', name: `schedule`, component: () => import('@/pages/offices/schedules'), meta: { auth: true, title: '日程表' } },
+      { path: 'note', name: 'note', component: () => import('@/pages/note'), meta: { auth: true, title: '便笺' } }
+      // { path: 'page2', name: `${pre}page2`, component: () => import('@/pages/demo/page2'), meta: { ...meta, title: '页面 2' } },
+      // { path: 'page3', name: `${pre}page3`, component: () => import('@/pages/demo/page3'), meta: { ...meta, title: '页面 3' } }
     ]
   },
   demo

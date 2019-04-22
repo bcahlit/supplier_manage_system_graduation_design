@@ -8,6 +8,7 @@ class Ability
 
     if user.present?  # additional permissions for logged in users (they can read their own posts)
       can :manage, Note, user_id: user.id
+      can :manage, Schedule, user_id: user.id
 
       # if user.admin?  # additional permissions for administrators
       #   can :manage, post

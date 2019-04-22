@@ -10,5 +10,12 @@ export default [
       { path: '/demo/page3', title: '页面 3' }
     ]
   },
-  { path: '/note', title: '便签', icon: 'sticky-note-o' }
+  {
+    title: '办公',
+    icon: 'briefcase',
+    children: [
+      { path: '/office/note', title: '便签', icon: 'sticky-note-o' },
+      { path: '/office/schedule', title: '日程安排', icon: 'calendar' }
+    ]
+  }
 ]
