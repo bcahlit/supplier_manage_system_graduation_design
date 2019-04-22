@@ -1,7 +1,7 @@
 class CreateSchedules < ActiveRecord::Migration[5.2]
   def change
     create_table :schedules do |t|
-      t.string :date, :null => false
+      t.integer :date, :null => false
       #Ex:- :null => false
       t.string :detail
       t.string :link

@@ -4,7 +4,7 @@ class SchedulesController < ApplicationController
 
   # GET /schedules
   def index
-    @schedules = current_user.notescurrent_user.notes
+    @schedules = current_user.schedule.order(date: :asc)
     render json: @schedules
   end
 
@@ -46,6 +46,6 @@ class SchedulesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def schedule_params
-      params.permit(:data, :detail, :link, :degree)
+      params.permit(:date, :detail, :link, :degree)
     end
 end

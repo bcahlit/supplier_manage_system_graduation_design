@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   get 'me', controller: :users, action: :me
   
   resources :notes
-  resources :schedule
+  resources :schedules
 end

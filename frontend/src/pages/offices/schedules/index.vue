@@ -6,8 +6,8 @@
         <el-form-item label="日程内容" prop="detail" :label-width="formLabelWidth">
           <el-input v-model="form.detail" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="日程评级" prop="degre" :label-width="formLabelWidth">
-          <el-select v-model="form.degre" placeholder="请选择评级">
+        <el-form-item label="日程评级" prop="degree" :label-width="formLabelWidth">
+          <el-select v-model="form.degree" placeholder="请选择评级">
             <el-option label="重要" value="2"></el-option>
             <el-option label="中等" value="1"></el-option>
             <el-option label="次要" value="0"></el-option>
@@ -19,7 +19,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancaleSchedule">取 消</el-button>
-        <el-button type="primary" @click="addSchedule">确 定</el-button>
+        <el-button type="primary" @click="addScheduleButton">确 定</el-button>
       </div>
     </el-dialog>
     <template slot="header">
@@ -41,6 +41,7 @@
       ref="d2Crud"
       :columns="columns"
       :data="data"
+      :loading="loading"
       :options="options"
       :rowHandle="rowHandle"
       @row-remove="handleRowRemove"/>
@@ -48,16 +49,17 @@
 </template>
 
 <script>
-import { getSchedules, addSchedule, deleteSchedule } from '@/api/notes'
+import { getSchedules, addSchedule, deleteSchedule } from '@/api/offices/schedules'
 export default {
   data () {
     return {
       showedDataValue: null,
       dialogFormVisible: false,
+      loading: false,
       columns: [
         {
           title: '日期',
-          key: 'date',
+          key: 'out_date',
           width: '180'
         },
         {
@@ -65,31 +67,11 @@ export default {
           key: 'detail'
         }
       ],
-      data: [
-        {
-          date: '2016-05-02',
-          degre: 2,
-          detail: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          degre: 0,
-          detail: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          degre: 1,
-          detail: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          degre: 2,
-          detail: '上海市普陀区金沙江路 1516 弄'
-        }
-      ],
+      data_raw: [],
+      data: [],
       options: {
         rowClassName ({ row, rowIndex }) {
-          switch (row.degre) {
+          switch (row.degree) {
             case 2:
               return 'warning-row'
             case 1:
@@ -100,14 +82,14 @@ export default {
       },
       form: {
         detail: '',
-        degre: '',
+        degree: '',
         date: null
       },
       rules: {
         detail: [
           { required: true, message: '请输入日程名称', trigger: 'blur' }
         ],
-        degre: [
+        degree: [
           { required: true, message: '请选择重要性', trigger: 'change' }
         ],
         date: [
@@ -165,22 +147,36 @@ export default {
       }
     }
   },
+  mounted () {
+    this.fetchData()
+  },
   methods: {
     onpick (pick) {
-      console.log(Date.parse(pick[0]))
-      console.log(Date.parse(pick[1]))
+      // console.log(Date.parse(pick[0]))
+      // console.log(Date.parse(pick[1]))
+      // console.log(this.data_raw)
+      this.setSchedule(Date.parse(pick[0])/1000,Date.parse(pick[1])/1000)
     },
     cancaleSchedule () {
       this.$refs['form'].resetFields()
       this.dialogFormVisible = false
     },
-    addSchedule () {
+    addScheduleButton () {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          // todo netwerk
-          console.log(this.form.date)
-          console.log(Date.parse(this.form.date))
-          this.cancaleSchedule()
+          addSchedule({
+            date: Date.parse(this.form.date)/1000,
+            detail: this.form.detail,
+            link: '#',
+            degree: this.form.degree
+          }).then(res => {
+            this.dialogFormVisible = true
+            console.log(res)
+            this.cancaleSchedule()
+            this.fetchData()
+          }).catch(err => {
+            console.log(err)
+          })
         } else {
           console.log('error submit!!')
           this.dialogFormVisible = true
@@ -188,15 +184,43 @@ export default {
       })
     },
     handleRowRemove ({ index, row }, done) {
-      setTimeout(() => {
-        console.log(index)
-        console.log(row)
+      deleteSchedule({ id: row.id }).then(res => {
+        console.log(res)
         this.$message({
           message: '删除成功',
           type: 'success'
         })
         done()
-      }, 300)
+        // this.fetchData()
+      })
+    },
+    fetchData () {
+      this.loading = true
+      getSchedules({}).then(res => {
+        // console.log(res) 这里还需要其他操作
+        // this.data = res
+        this.data_raw = res
+        let timeStamp = new Date(new Date().setHours(0, 0, 0, 0)) / 1000
+        this.setSchedule(timeStamp,timeStamp+86400)
+        this.loading = false
+      }).catch(err => {
+        this.loading = false
+        console.log(err)
+      })
+    // console.log(this.$refs.d2Crud.d2CrudData) // 获取表格数据
+    },
+    setSchedule(startDate,endDate){
+      let [...filter_data] = this.data_raw.filter(item => {
+        return item.date>startDate && item.date<endDate
+      })
+      console.log(filter_data)
+      let map_data= filter_data.map(item => {
+        let t_date = new Date(item.date*1000)
+        item.out_date=t_date.toLocaleString('en-GB', { timeZone: 'Asia/Shanghai' })
+        return item
+      })
+      console.log(map_data)
+      this.data = map_data
     }
   }
 }

@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_113320) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.string "date", null: false
+    t.integer "date", null: false
     t.string "detail"
     t.string "link"
     t.integer "degree", default: 0

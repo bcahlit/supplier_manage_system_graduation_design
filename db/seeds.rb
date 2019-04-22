@@ -6,6 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 user = User.create({user_name: "admin", phone: "18766653491", password: "admin", password_confirmation: "admin"})
+
+# 创建便笺 便于分页
 50.times do
   user.notes.create!(title: Faker::Lorem.word, context: Faker::Lorem.sentence)
+end
+# 创建日程
+20.times do
+  user.schedule.create!(date: rand(1555948800..1559232000),
+                        detail: Faker::Lorem.sentence, degree: rand(0..2))
 end

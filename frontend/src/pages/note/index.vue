@@ -90,16 +90,16 @@ export default {
   },
   methods: {
     handleRowRemove ({ index, row }, done) {
-        deleteNote({id: row.id}).then(res => {
-          console.log(res)
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          done()
-          this.fetchData()
+      deleteNote({ id: row.id }).then(res => {
+        // console.log(res)
+        this.$message({
+          message: '删除成功',
+          type: 'success'
         })
-        // console.log(index)
+        done()
+        this.fetchData()
+      })
+      // console.log(index)
     },
     handleDialogOpen ({ mode }) {
       this.$message({
@@ -116,9 +116,12 @@ export default {
       this.loading = true
       getNotes({ 'page': this.pagination.currentPage }).then(res => {
         // console.log(res)
-        this.data = res.notes
         this.pagination.pageSize = res.pageSize
         this.pagination.total = res.total
+        this.data = res.notes.map(item => {
+          item.created_at = item.created_at.replace('T',' ').slice(0,15)
+          return item
+        })
         this.loading = false
       }).catch(err => {
         this.loading = false

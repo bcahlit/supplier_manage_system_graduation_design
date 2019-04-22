@@ -3,21 +3,21 @@ import request from '@/plugin/axios'
 export function getSchedules (data) {
   console.log(data)
   return request({
-    url: '/schedule',
+    url: '/schedules',
     method: 'get',
     params: data
   })
 }
 export function addSchedule (data) {
   return request({
-    url: '/schedule',
+    url: '/schedules',
     method: 'post',
     data
   })
 }
 export function deleteSchedule (data) {
   return request({
-    url: `/schedule/${data.id}`,
+    url: `/schedules/${data.id}`,
     method: 'delete'
   })
 }
