@@ -163,7 +163,7 @@ export default {
       // console.log(Date.parse(pick[0]))
       // console.log(Date.parse(pick[1]))
       // console.log(this.data_raw)
-      this.setSchedule(Date.parse(pick[0])/1000,Date.parse(pick[1])/1000)
+      this.setSchedule(Date.parse(pick[0]) / 1000, Date.parse(pick[1]) / 1000)
     },
     cancaleSchedule () {
       this.$refs['form'].resetFields()
@@ -173,7 +173,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           addSchedule({
-            date: Date.parse(this.form.date)/1000,
+            date: Date.parse(this.form.date) / 1000,
             detail: this.form.detail,
             link: '#',
             degree: this.form.degree
@@ -209,7 +209,7 @@ export default {
         // this.data = res
         this.data_raw = res
         let timeStamp = new Date(new Date().setHours(0, 0, 0, 0)) / 1000
-        this.setSchedule(timeStamp,timeStamp+86400)
+        this.setSchedule(timeStamp, timeStamp + 86400)
         this.loading = false
       }).catch(err => {
         this.loading = false
@@ -217,18 +217,15 @@ export default {
       })
     // console.log(this.$refs.d2Crud.d2CrudData) // 获取表格数据
     },
-    setSchedule(startDate,endDate){
-      let [...filter_data] = this.data_raw.filter(item => {
-        return item.date>startDate && item.date<endDate
+    setSchedule (startDate, endDate) {
+      let [...filterData] = this.data_raw.filter(item => {
+        return item.date > startDate && item.date < endDate
       })
-      console.log(filter_data)
-      let map_data= filter_data.map(item => {
-        let t_date = new Date(item.date*1000)
-        item.out_date=t_date.toLocaleString('en-GB', { timeZone: 'Asia/Shanghai' })
+      // console.log(filter_data)
+      this.data = filterData.map(item => {
+        item.out_date = new Date(item.date * 1000).toLocaleString('en-GB', { timeZone: 'Asia/Shanghai' })
         return item
       })
-      console.log(map_data)
-      this.data = map_data
     }
   }
 }

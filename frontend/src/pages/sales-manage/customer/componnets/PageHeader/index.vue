@@ -5,29 +5,24 @@
     :rules="rules"
     size="mini"
     style="margin-bottom: -18px;">
-
-
     <el-form-item label="手机号" prop="phone">
       <el-input
         v-model="form.phone"
         placeholder="用户手机号"
         style="width: 180px;"/>
     </el-form-item>
-
     <!-- <el-form-item label="卡密" prop="key">
       <el-input
         v-model="form.key"
         placeholder="卡密"
         style="width: 120px;"/>
     </el-form-item>
-
     <el-form-item label="备注" prop="note">
       <el-input
         v-model="form.note"
         placeholder="备注"
         style="width: 120px;"/>
     </el-form-item> -->
-
     <el-form-item>
       <el-button
         type="primary"

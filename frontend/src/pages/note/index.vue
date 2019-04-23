@@ -119,7 +119,7 @@ export default {
         this.pagination.pageSize = res.pageSize
         this.pagination.total = res.total
         this.data = res.notes.map(item => {
-          item.created_at = item.created_at.replace('T',' ').slice(0,15)
+          item.created_at = item.created_at.replace('T', ' ').slice(0, 15)
           return item
         })
         this.loading = false
