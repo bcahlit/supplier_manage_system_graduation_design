@@ -1,5 +1,5 @@
 <template>
-  <d2-container>
+  <d2-container style="margin-bottom: -18px;">
     <!-- Form -->
     <el-dialog title="新建日程" :visible.sync="dialogFormVisible">
       <el-form :model="form" ref="form" :rules="rules">
@@ -22,20 +22,28 @@
         <el-button type="primary" @click="addScheduleButton">确 定</el-button>
       </div>
     </el-dialog>
-    <template slot="header">
-      选则日程范围:
-      <el-date-picker
-        v-model="showedDataValue"
-        type="daterange"
-        align="right"
-        unlink-panels
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        @change="onpick"
-        :picker-options="pickerOptions"
-      ></el-date-picker>
-      <el-button type="primary" style="margin-left: 20px;" @click="dialogFormVisible = true">新建日程</el-button>
+    <template slot="header" >
+      <el-form
+      size="mini"
+      :inline="true"
+      style="margin-bottom: -18px;">
+        <el-form-item label="选则日程范围：">
+          <el-date-picker
+            v-model="showedDataValue"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="onpick"
+            :picker-options="pickerOptions"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" style="margin-left: 20px;" @click="dialogFormVisible = true">新建日程</el-button>
+        </el-form-item>
+      </el-form>
     </template>
     <d2-crud
       ref="d2Crud"

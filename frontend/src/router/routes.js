@@ -59,6 +59,20 @@ const frameIn = [
       // { path: 'page3', name: `${pre}page3`, component: () => import('@/pages/demo/page3'), meta: { ...meta, title: '页面 3' } }
     ]
   },
+  {
+    path: '/sales_manage',
+    name: 'sales_manage',
+    auth: true,
+    redirect: { name: 'customer' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'customer', name: `customer`, component: () => import('@/pages/sales-manage/customer'), meta: { auth: true, title: '客户管理' } },
+      { path: 'integral', name: `integral`, component: () => import('@/pages/sales-manage/integral'), meta: { auth: true, title: '积分管理' } },
+      { path: 'order', name: 'order', component: () => import('@/pages/sales-manage/order'), meta: { auth: true, title: '订单管理' } }
+      // { path: 'page2', name: `${pre}page2`, component: () => import('@/pages/demo/page2'), meta: { ...meta, title: '页面 2' } },
+      // { path: 'page3', name: `${pre}page3`, component: () => import('@/pages/demo/page3'), meta: { ...meta, title: '页面 3' } }
+    ]
+  },
   demo
 ]
 

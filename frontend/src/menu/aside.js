@@ -17,5 +17,14 @@ export default [
       { path: '/office/note', title: '便签', icon: 'sticky-note-o' },
       { path: '/office/schedule', title: '日程安排', icon: 'calendar' }
     ]
+  },
+  {
+    title: '销售管理',
+    icon: 'area-chart',
+    children: [
+      { path: '/sales_manage/customer', title: '客户管理', icon: 'user-o' },
+      { path: '/sales_manage/integral', title: '积分管理', icon: 'gg-circle' },
+      { path: '/sales_manage/order', title: '订单管理', icon: 'first-order' }
+    ]
   }
 ]
