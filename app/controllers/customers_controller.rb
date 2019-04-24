@@ -3,8 +3,9 @@ class CustomersController < ApplicationController
 
   # GET /customers
   def index
-    @customers = Customer.where("phone LIKE ?", params[:phone])
-    render json: @customers
+    # todo: 如果有排序 增加排序功能 还有按其他方式选择
+    @customers = Customer.where("phone LIKE ?", params[:phone]+'%').page(params[:current] || 1).per(params[:size] || 10)
+    render json: {customers: @customers, currentPage: @customers.current_page, pageSize: @customers.count, total:  Customer.where("phone LIKE ?", params[:phone]+'%').count}
   end
 
   # GET /customers/1

@@ -41,22 +41,23 @@ user = User.create({user_name: "admin", phone: "18766653491", password: "admin",
 
 # 创建便笺 便于分页
 50.times do
-  user.notes.create!(title: Faker::Lorem.word, context: sentence[rand(0..(sentence.size)])
+  user.notes.create!(title: Faker::Lorem.word, context: sentence[rand(0..(sentence.size-1))])
 end
 # 创建日程
 20.times do
   user.schedule.create!(date: rand(1555948800..1559232000),
-                        detail: sentence[rand(0..(sentence.size)], degree: rand(0..2))
+                        detail: sentence[rand(0..(sentence.size-1))], degree: rand(0..2))
 end
 
 100.times do
   Customer.create!({
-    phone: rand(18000000000..1899999999).to_s,
+    phone: rand(18000000000..18999999999).to_s,
     name: Faker::Name.name,
-    address: address[rand(0..(address.size))],
-    wechart: 'wx'+rand(36**8).to_s 36,
+    address: address[rand(0..(address.size-1))],
+    wechart: 'wx'+rand(36**8).to_s(36),
     origin: rand(0..3),
     age: rand(15..75),
     birthday: rand(26236800..1067875200),
     email: Faker::Internet.email
   })
+end

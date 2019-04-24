@@ -8,18 +8,18 @@
       style="width: 100%;"
       @selection-change="handleSelectionChange">
 
-      <el-table-column
+      <!-- <el-table-column
         type="selection"
         width="55">
-      </el-table-column>
+      </el-table-column> -->
 
-      <el-table-column label="卡密" :show-overflow-tooltip="true">
+      <el-table-column label="手机号" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           {{scope.row.key}}
         </template>
       </el-table-column>
 
-      <el-table-column label="面值" width="60" align="center">
+      <el-table-column label="姓名" width="60" align="center">
         <template slot-scope="scope">
           <el-tag
             size="mini"
@@ -67,25 +67,25 @@
         </template>
       </el-table-column> -->
 
-      <el-table-column label="管理员" width="60">
+      <el-table-column label="地区" width="60">
         <template slot-scope="scope">
           {{scope.row.admin}}
         </template>
       </el-table-column>
 
-      <el-table-column label="管理员备注" :show-overflow-tooltip="true">
+      <el-table-column label="微信" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           {{scope.row.adminNote}}
         </template>
       </el-table-column>
 
-      <el-table-column label="创建时间" width="150" :show-overflow-tooltip="true">
+      <el-table-column label="来源" width="150" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           {{scope.row.dateTimeCreat}}
         </template>
       </el-table-column>
 
-      <el-table-column label="使用状态" width="100" align="center">
+      <!-- <el-table-column label="生日" width="100" align="center">
         <template slot-scope="scope">
           <el-tag
             size="mini"
@@ -93,9 +93,9 @@
             {{scope.row.used ? '已使用' : '未使用'}}
           </el-tag>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
-      <el-table-column label="使用时间" width="150" :show-overflow-tooltip="true">
+      <el-table-column label="年龄" width="150" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           {{scope.row.dateTimeUse}}
         </template>
@@ -118,16 +118,16 @@ export default {
     return {
       currentTableData: [],
       multipleSelection: [],
-      downloadColumns: [
-        { label: '卡密', prop: 'key' },
-        { label: '面值', prop: 'value' },
-        { label: '状态', prop: 'type' },
-        { label: '管理员', prop: 'admin' },
-        { label: '管理员备注', prop: 'adminNote' },
-        { label: '创建时间', prop: 'dateTimeCreat' },
-        { label: '使用状态', prop: 'used' },
-        { label: '使用时间', prop: 'dateTimeUse' }
-      ]
+      // downloadColumns: [
+      //   { label: '卡密', prop: 'key' },
+      //   { label: '面值', prop: 'value' },
+      //   { label: '状态', prop: 'type' },
+      //   { label: '管理员', prop: 'admin' },
+      //   { label: '管理员备注', prop: 'adminNote' },
+      //   { label: '创建时间', prop: 'dateTimeCreat' },
+      //   { label: '使用状态', prop: 'used' },
+      //   { label: '使用时间', prop: 'dateTimeUse' }
+      // ]
     }
   },
   watch: {
@@ -138,18 +138,6 @@ export default {
       immediate: true
     }
   },
-  methods: {
-    handleSwitchChange (val, index) {
-      const oldValue = this.currentTableData[index]
-      this.$set(this.currentTableData, index, {
-        ...oldValue,
-        type: val
-      })
-      // 注意 这里并没有把修改后的数据传递出去 如果需要的话请自行修改
-    },
-    handleSelectionChange (val) {
-      this.multipleSelection = val
-    }
-  }
+  methods: {}
 }
 </script>

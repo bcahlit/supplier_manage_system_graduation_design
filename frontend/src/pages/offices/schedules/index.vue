@@ -7,13 +7,13 @@
           <el-input v-model="form.detail" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="日程评级" prop="degree" :label-width="formLabelWidth">
-          <el-select v-model="form.degree" placeholder="请选择评级">
+          <el-select v-model="form.degree" filterable default-first-option placeholder="请选择评级">
             <el-option label="重要" value="2"></el-option>
             <el-option label="中等" value="1"></el-option>
             <el-option label="次要" value="0"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="日程内容" prop="date" :label-width="formLabelWidth">
+        <el-form-item label="日程时间" prop="date" :label-width="formLabelWidth">
           <el-date-picker v-model="form.date" type="datetime" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-form>
@@ -90,7 +90,7 @@ export default {
       },
       form: {
         detail: '',
-        degree: '',
+        degree: null,
         date: null
       },
       rules: {
