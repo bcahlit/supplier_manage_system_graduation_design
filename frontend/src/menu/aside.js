@@ -23,8 +23,17 @@ export default [
     icon: 'area-chart',
     children: [
       { path: '/sales_manage/customer', title: '客户管理', icon: 'user-o' },
-      { path: '/sales_manage/integral', title: '积分管理', icon: 'gg-circle' },
+      { path: '/sales_manage/points', title: '积分管理', icon: 'gg-circle' },
       { path: '/sales_manage/order', title: '订单管理', icon: 'first-order' }
+    ]
+  },
+  {
+    title: '销售支持',
+    icon: 'file-text',
+    children: [
+      { path: '/sale_supports/product', title: '产品管理', icon: 'product-hunt' },
+      { path: '/sale_supports/work_report', title: '工作报告', icon: 'reply' },
+      { path: '/sale_supports/message', title: '消息管理', icon: 'comments' }
     ]
   }
 ]

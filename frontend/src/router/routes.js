@@ -67,10 +67,20 @@ const frameIn = [
     component: layoutHeaderAside,
     children: [
       { path: 'customer', name: `customer`, component: () => import('@/pages/sales-manage/customer'), meta: { auth: true, title: '客户管理' } },
-      { path: 'integral', name: `integral`, component: () => import('@/pages/sales-manage/integral'), meta: { auth: true, title: '积分管理' } },
+      { path: 'points', name: `points`, component: () => import('@/pages/sales-manage/points'), meta: { auth: true, title: '积分管理' } },
       { path: 'order', name: 'order', component: () => import('@/pages/sales-manage/order'), meta: { auth: true, title: '订单管理' } }
-      // { path: 'page2', name: `${pre}page2`, component: () => import('@/pages/demo/page2'), meta: { ...meta, title: '页面 2' } },
-      // { path: 'page3', name: `${pre}page3`, component: () => import('@/pages/demo/page3'), meta: { ...meta, title: '页面 3' } }
+    ]
+  },
+  {
+    path: '/sale_supports',
+    name: 'sale_supports',
+    auth: true,
+    redirect: { name: 'product' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'product', name: `product`, component: () => import('@/pages/sale_supports/product'), meta: { auth: true, title: '产品管理' } },
+      { path: 'work_report', name: `work_report`, component: () => import('@/pages/sale_supports/work_report'), meta: { auth: true, title: '积分管理' } },
+      { path: 'message', name: 'message', component: () => import('@/pages/sale_supports/message'), meta: { auth: true, title: '订单管理' } }
     ]
   },
   demo
