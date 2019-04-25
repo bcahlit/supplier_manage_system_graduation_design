@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_105848) do
+ActiveRecord::Schema.define(version: 2019_04_25_085346) do
 
   create_table "customers", force: :cascade do |t|
     t.string "phone", null: false
@@ -38,6 +38,61 @@ ActiveRecord::Schema.define(version: 2019_04_23_105848) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
+  create_table "order_details", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "product_id"
+    t.integer "number", default: 1, null: false
+    t.string "type"
+    t.integer "time"
+    t.string "remake"
+    t.integer "price", null: false
+    t.integer "origin_price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_details_on_order_id"
+    t.index ["product_id"], name: "index_order_details_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "time", null: false
+    t.string "remake"
+    t.integer "total_price", null: false
+    t.integer "score", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
+  create_table "points", force: :cascade do |t|
+    t.string "item_name"
+    t.integer "value"
+    t.integer "user_id"
+    t.integer "order_id"
+    t.integer "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_points_on_order_id"
+    t.index ["user_id"], name: "index_points_on_user_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "total", null: false
+    t.string "number", null: false
+    t.string "introduction"
+    t.string "type"
+    t.integer "time", null: false
+    t.string "remake"
+    t.integer "price", null: false
+    t.string "color"
+    t.string "size", null: false
+    t.string "band"
+    t.integer "classify"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "schedules", force: :cascade do |t|
