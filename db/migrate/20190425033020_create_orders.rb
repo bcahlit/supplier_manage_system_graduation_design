@@ -4,7 +4,7 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       t.references :customer, foreign_key: true
       t.integer :time, :null => false
       #Ex:- :null => false
-      t.string :remake
+      t.string :remark
       t.integer :total_price, :null => false
       t.integer :score, :null => false
       #Ex:- :null => false

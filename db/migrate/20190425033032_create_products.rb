@@ -7,9 +7,9 @@ class CreateProducts < ActiveRecord::Migration[5.2]
       t.string :number, :null => false
       t.string :introduction
       t.string :type
-      t.integer :time, :null => false
-      t.string :remake
-      t.integer :price, :null => false
+      t.integer :time
+      t.string :remark
+      t.integer :price
       t.string :color
       t.string :size, :null => false
       t.string :band

@@ -16,14 +16,14 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.string "phone", null: false
     t.string "name"
     t.string "address"
-    t.string "sex"
-    t.integer "origin"
-    t.integer "level", default: 0
     t.string "wechart"
+    t.integer "origin", default: 0
+    t.integer "age"
+    t.string "sex"
+    t.integer "level", default: 0
     t.string "qq"
     t.string "email"
     t.integer "state", default: 0
-    t.integer "age"
     t.boolean "marriage"
     t.integer "birthday"
     t.string "work"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id"
     t.integer "time", null: false
-    t.string "remake"
+    t.string "remark"
     t.integer "total_price", null: false
     t.integer "score", null: false
     t.datetime "created_at", null: false
@@ -67,15 +67,15 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
   end
 
   create_table "points", force: :cascade do |t|
-    t.string "item_name"
-    t.integer "value"
-    t.integer "user_id"
+    t.string "item_name", null: false
+    t.integer "value", null: false
+    t.integer "customer_id"
     t.integer "order_id"
     t.integer "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_points_on_customer_id"
     t.index ["order_id"], name: "index_points_on_order_id"
-    t.index ["user_id"], name: "index_points_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -84,9 +84,9 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.string "number", null: false
     t.string "introduction"
     t.string "type"
-    t.integer "time", null: false
-    t.string "remake"
-    t.integer "price", null: false
+    t.integer "time"
+    t.string "remark"
+    t.integer "price"
     t.string "color"
     t.string "size", null: false
     t.string "band"

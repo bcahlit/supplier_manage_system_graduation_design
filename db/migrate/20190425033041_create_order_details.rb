@@ -3,6 +3,7 @@ class CreateOrderDetails < ActiveRecord::Migration[5.2]
     create_table :order_details do |t|
       t.references :order, foreign_key: true
       t.references :product, foreign_key: true
+      # 数量
       t.integer :number, :null => false, :default => 1
       #Ex:- :default =>''
       t.string :type

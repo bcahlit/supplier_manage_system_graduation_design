@@ -49,8 +49,21 @@ end
                         detail: sentence[rand(0..(sentence.size-1))], degree: rand(0..2))
 end
 
+40.times do
+  Product.create!({
+    name: Faker::Name.name,
+    total: rand(5..200),
+    number: rand(100000..999999).to_s,
+    introduction: "我是一段简介并且是html的~",
+    time: rand(1554048000000..1556985600000),
+    price: rand(60..600),
+    color: "黑色",
+    size: 'xl'
+  })
+end
+
 100.times do
-  Customer.create!({
+  customer = Customer.create!({
     phone: rand(18000000000..18999999999).to_s,
     name: Faker::Name.name,
     address: address[rand(0..(address.size-1))],
@@ -59,5 +72,28 @@ end
     age: rand(15..75),
     birthday: rand(26236800..1067875200),
     email: Faker::Internet.email
+  })
+  orderTime = rand(1454342400000..1563984000000)
+  thisorder = customer.orders.create!({
+    time: orderTime,
+    total_price: rand(100..600),
+    score:  rand(100..600)
+  })
+
+  # TODO
+  customer.points.create!({
+    item_name: Faker::Name.name,
+    value: rand(100..600),
+    time: orderTime,
+    order: thisorder
+  })
+end
+
+200.times do
+  Order.find(rand(1..99)).order_details.create!({
+    product: Product.find(rand(1..39)),
+    number: 1,
+    price: rand(60..400),
+    origin_price: rand(80..500),
   })
 end
