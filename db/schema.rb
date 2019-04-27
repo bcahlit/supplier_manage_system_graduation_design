@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
   end
 
   create_table "order_details", force: :cascade do |t|
-    t.integer "order_id"
+    t.integer "order_form_id"
     t.integer "product_id"
     t.integer "number", default: 1, null: false
     t.string "type"
@@ -51,38 +51,38 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.integer "origin_price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_order_details_on_order_id"
+    t.index ["order_form_id"], name: "index_order_details_on_order_form_id"
     t.index ["product_id"], name: "index_order_details_on_product_id"
   end
 
-  create_table "orders", force: :cascade do |t|
+  create_table "order_forms", force: :cascade do |t|
     t.integer "customer_id"
     t.integer "time", null: false
     t.string "remark"
     t.integer "total_price", null: false
     t.integer "score", null: false
+    t.integer "state", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["customer_id"], name: "index_order_forms_on_customer_id"
   end
 
   create_table "points", force: :cascade do |t|
     t.string "item_name", null: false
     t.integer "value", null: false
     t.integer "customer_id"
-    t.integer "order_id"
+    t.integer "order_form_id"
     t.integer "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_points_on_customer_id"
-    t.index ["order_id"], name: "index_points_on_order_id"
+    t.index ["order_form_id"], name: "index_points_on_order_form_id"
   end
 
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
     t.integer "total", null: false
     t.string "number", null: false
-    t.string "introduction"
     t.string "type"
     t.integer "time"
     t.string "remark"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.string "size", null: false
     t.string "band"
     t.integer "classify"
+    t.string "introduction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

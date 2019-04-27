@@ -6,7 +6,7 @@ class CreatePoints < ActiveRecord::Migration[5.2]
       t.integer :value, :null => false
       #Ex:- :null => false
       t.references :customer, foreign_key: true
-      t.references :order, foreign_key: true
+      t.references :order_form, foreign_key: true
       t.integer :time
 
       t.timestamps

@@ -74,7 +74,7 @@ end
     email: Faker::Internet.email
   })
   orderTime = rand(1454342400000..1563984000000)
-  thisorder = customer.orders.create!({
+  thisorder = customer.order_forms.create!({
     time: orderTime,
     total_price: rand(100..600),
     score:  rand(100..600)
@@ -85,12 +85,12 @@ end
     item_name: Faker::Name.name,
     value: rand(100..600),
     time: orderTime,
-    order: thisorder
+    order_form: thisorder
   })
 end
 
 200.times do
-  Order.find(rand(1..99)).order_details.create!({
+  OrderForm.find(rand(1..99)).order_details.create!({
     product: Product.find(rand(1..39)),
     number: 1,
     price: rand(60..400),

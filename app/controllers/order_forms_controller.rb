@@ -1,10 +1,14 @@
-class OrdersController < ApplicationController
+class OrderFormsController < ApplicationController
   before_action :set_order, only: [:show, :update, :destroy]
 
   # GET /orders
   def index
-    @orders = Order.all
-
+    if params[:phone] != ''
+      @customer = Customer.find_by phone: params[:phone]
+      @orders = @customer.order_forms.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
+    else
+      @orders = OrderForm.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
+    end
     render json: @orders
   end
 

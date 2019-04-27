@@ -59,7 +59,7 @@
           <el-option label="产品简介" value='introduction'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item  label="手机号" prop="phone">
+      <el-form-item prop="phone">
         <el-input
           v-model="form.selectValue"
           placeholder=""

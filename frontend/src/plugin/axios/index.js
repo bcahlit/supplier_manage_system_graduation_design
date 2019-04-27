@@ -96,6 +96,7 @@ service.interceptors.response.use(
         case 503: error.message = '服务不可用'; break
         case 504: error.message = '网关超时'; break
         case 505: error.message = 'HTTP版本不受支持'; break
+        case 412: error.message = '不满足先决条件'; break
         default: break
       }
     }
