@@ -18,6 +18,10 @@ class Message
     def self.unauthorized
       'Unauthorized request'
     end
+
+    def self.precondition_failed
+      '不满足先决条件'
+    end
   
     def self.account_created
       'Account created successfully'
