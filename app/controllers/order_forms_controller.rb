@@ -9,7 +9,7 @@ class OrderFormsController < ApplicationController
     else
       @orders = OrderForm.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
     end
-    render json: @orders
+    render json: @orders, meta: pagination_dict(@orders)
   end
 
   # GET /orders/1
@@ -47,7 +47,12 @@ class OrderFormsController < ApplicationController
     def set_order
       @order = Order.find(params[:id])
     end
-
+    def make_meta(message, code)
+      {
+        code: code,
+        message: message
+      }
+    end
     # Only allow a trusted parameter "white list" through.
     def order_params
       params.fetch(:order, {})

@@ -1,4 +1,4 @@
 class OrderFormSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :customer, :time, :remark, :total_price, :score, :state
   has_many :order_details
 end

@@ -6,6 +6,15 @@ class ApplicationController < ActionController::API
   before_action :authorize_request
   attr_reader :current_user
 
+
+  def pagination_dict(collection)
+    {
+      currentPage: collection.current_page,
+      pageSize: collection.count,
+      total_pages: collection.total_pages,
+      total: collection.total_count
+    }
+  end
   private
 
   # Check for valid request token and return user

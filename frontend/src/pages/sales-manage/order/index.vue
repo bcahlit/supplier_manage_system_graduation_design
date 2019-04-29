@@ -1,7 +1,7 @@
 <template>
   <d2-container>
     <el-dialog style="margin-top: 0;" :visible.sync="productDialogFormVisible">
-      <el-form  size="mini" :model="productForm" ref="productForm" :rules="productRules">
+      <!-- <el-form  size="mini" :model="productForm" ref="productForm" :rules="productRules">
         <el-form-item label="产品名称" prop="name" :label-width="formLabelWidth">
           <el-input v-model="productForm.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -39,7 +39,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancaleAddproduct">取 消</el-button>
         <el-button type="primary" @click="AddPorductEvent">确 定</el-button>
-      </div>
+      </div> -->
     </el-dialog>
     <el-form
       :inline="true"
@@ -100,13 +100,13 @@
 
       <el-table-column label="客户名" width="160" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          {{scope.row.name}}
+          {{scope.row.customer.name}}
         </template>
       </el-table-column>
 
       <el-table-column label="时间" width="160" align="center">
         <template slot-scope="scope">
-            {{scope.row.time|date_format('YYYY-M-D')}}
+            {{scope.row.date|date_format('YYYY-M-D')}}
         </template>
       </el-table-column>
 
@@ -264,7 +264,11 @@ export default {
             ...this.page
           }).then(res => {
             console.log(res)
-            // this.userTable = res.products
+            this.userTable = res.order_forms.map(item => {
+              item.date = new Date(item.time)
+              // console.log(item)
+              return item
+            })
             // this.page.pageCurrent = res.currentPage
             // // this.page.pageSize = res.pageSize
             // this.page.pageTotal = res.total
