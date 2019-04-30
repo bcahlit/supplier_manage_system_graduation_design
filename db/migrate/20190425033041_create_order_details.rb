@@ -1,7 +1,7 @@
 class CreateOrderDetails < ActiveRecord::Migration[5.2]
   def change
     create_table :order_details do |t|
-      t.references :order_form, foreign_key: true
+      t.references :order_form, foreign_key: true, on_delete: :cascade
       t.references :product, foreign_key: true
       # 数量
       t.integer :number, :null => false, :default => 1

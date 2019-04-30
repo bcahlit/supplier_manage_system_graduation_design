@@ -45,7 +45,7 @@ class OrderFormsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
-      @order = Order.find(params[:id])
+      @order = OrderForm.find(params[:id])
     end
     def make_meta(message, code)
       {

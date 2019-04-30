@@ -2,8 +2,10 @@
   <d2-container>
     <el-dialog title="订单详情" style="margin-top: 0;" :visible.sync="orderDialogVisible">
       <el-table :data="order_details" size="mini">
-        <el-table-column property="product_id" label="产品id" width="150"></el-table-column>
-        <el-table-column property="price" label="价格" width="200"></el-table-column>
+        <el-table-column property="product.name" label="产品名" width="150"></el-table-column>
+        <el-table-column property="product.color" label="颜色" width="70"></el-table-column>
+        <el-table-column property="product.size" label="大小" width="70"></el-table-column>
+        <el-table-column property="price" label="价格" width="70"></el-table-column>
         <el-table-column property="number" label="数量"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
@@ -25,6 +27,7 @@
         title="内层 Dialog"
         :visible.sync="innerVisible"
         append-to-body>
+
       </el-dialog>
       <!-- <el-form  size="mini" :model="productForm" ref="productForm" :rules="productRules">
         <el-form-item label="产品名称" prop="name" :label-width="formLabelWidth">
@@ -167,7 +170,7 @@
 
 <script>
 import { deleteOrderItem } from '@api/salesManager/order_detail'
-import { getOrders, updateProduct, addProduct, deleteProduct } from '@api/salesManager/order/'
+import { getOrders, updateProduct, addProduct, deleteOrder } from '@api/salesManager/order/'
 export default {
   components: {
     'DemoPageFooter': () => import('@/components/PageFooter')
@@ -269,8 +272,8 @@ export default {
       this.orderDialogVisible = true
     },
     handleDelete (index, row) {
-      console.log(index, row)
-      deleteProduct({ id: row.id }).then(res => {
+      // console.log(index, row)
+      deleteOrder({ id: row.id }).then(res => {
         console.log(res)
         this.handleFormSubmit()
         this.$message({

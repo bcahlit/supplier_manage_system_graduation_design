@@ -3,7 +3,7 @@ class CreateNotes < ActiveRecord::Migration[5.2]
     create_table :notes do |t|
       t.string :title
       t.string :context
-      t.references :user
+      t.references :user, on_delete: :cascade
 
       t.timestamps
     end

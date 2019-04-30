@@ -1,7 +1,7 @@
 class CreateOrderForms < ActiveRecord::Migration[5.2]
   def change
     create_table :order_forms do |t|
-      t.references :customer, foreign_key: true
+      t.references :customer, foreign_key: true, on_delete: :cascade
       t.integer :time, :null => false
       #Ex:- :null => false
       t.string :remark
