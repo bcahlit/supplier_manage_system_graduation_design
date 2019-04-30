@@ -13,7 +13,7 @@ module ExceptionHandler
     rescue_from ExceptionHandler::MissingToken, with: :four_twenty_two
     rescue_from ExceptionHandler::InvalidToken, with: :four_twenty_two
     rescue_from CanCan::AccessDenied, with: :unauthorized_request
-    # rescue_from ActiveRecord::InvalidForeignKey, with: :unprecondition_request
+    rescue_from ActiveRecord::InvalidForeignKey, with: :unprecondition_request
     rescue_from ActiveRecord::RecordNotFound do |e|
       json_response({ message: e.message }, :not_found)
     end

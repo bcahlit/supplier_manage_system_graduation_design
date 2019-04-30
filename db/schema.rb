@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.string "remake"
     t.integer "price", null: false
     t.integer "origin_price", null: false
+    t.integer "state", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_form_id"], name: "index_order_details_on_order_form_id"

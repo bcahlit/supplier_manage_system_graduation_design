@@ -5,69 +5,18 @@
         <el-table-column property="product.name" label="产品名" width="150"></el-table-column>
         <el-table-column property="product.color" label="颜色" width="70"></el-table-column>
         <el-table-column property="product.size" label="大小" width="70"></el-table-column>
-        <el-table-column property="price" label="价格" width="70"></el-table-column>
+        <el-table-column property="product.price" label="价格" width="70"></el-table-column>
         <el-table-column property="number" label="数量"></el-table-column>
+        <el-table-column property="state" label="状态"></el-table-column>
         <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button-group>
-              <el-button
-                size="mini"
-                type="info"
-                @click="handleDetailShow(scope.$index, scope.row)">编辑</el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDetailDelete(scope.$index, scope.row)">删除</el-button>
-            </el-button-group>
+          <template v-if="scope.row.state==1" slot-scope="scope">
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDetailBack(scope.$index, scope.row)">退货</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-dialog
-        width="30%"
-        title="内层 Dialog"
-        :visible.sync="innerVisible"
-        append-to-body>
-
-      </el-dialog>
-      <!-- <el-form  size="mini" :model="productForm" ref="productForm" :rules="productRules">
-        <el-form-item label="产品名称" prop="name" :label-width="formLabelWidth">
-          <el-input v-model="productForm.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="总数" prop="total" :label-width="formLabelWidth">
-          <el-input v-model="productForm.total" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="大小" prop="size" :label-width="formLabelWidth">
-          <el-input v-model="productForm.size" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="产品号" prop="number" :label-width="formLabelWidth">
-          <el-input v-model="productForm.number" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="类型" prop="type" :label-width="formLabelWidth">
-          <el-input v-model="productForm.type" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark" :label-width="formLabelWidth">
-          <el-input v-model="productForm.remark" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="价格" prop="price" :label-width="formLabelWidth">
-          <el-input v-model="productForm.price" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="颜色" prop="color" :label-width="formLabelWidth">
-          <el-input v-model="productForm.color" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="品牌" prop="band" :label-width="formLabelWidth">
-          <el-date-picker v-model="productForm.band" type="date" placeholder="选择日期"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="分类" prop="classify" :label-width="formLabelWidth">
-          <el-input v-model="productForm.classify" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="简介" prop="introduction" :label-width="formLabelWidth">
-          <el-input v-model="productForm.introduction" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="cancaleAddproduct">取 消</el-button>
-        <el-button type="primary" @click="AddPorductEvent">确 定</el-button>
-      </div> -->
     </el-dialog>
     <el-form
       :inline="true"
@@ -169,8 +118,8 @@
 </template>
 
 <script>
-import { deleteOrderItem } from '@api/salesManager/order_detail'
-import { getOrders, updateProduct, addProduct, deleteOrder } from '@api/salesManager/order/'
+import { updateOrderItem } from '@api/salesManager/order_detail'
+import { getOrders, updateOrder, deleteOrder } from '@api/salesManager/order/'
 export default {
   components: {
     'DemoPageFooter': () => import('@/components/PageFooter')
@@ -179,9 +128,10 @@ export default {
     return {
       innerVisible: false,
       order_details: [],
+      currentOrderId: null,
       orderDialogVisible: false,
       formLabelWidth: '120px',
-      productForm: {
+      orderDetailForm: {
         name: '',
         total: null,
         number: '',
@@ -251,14 +201,22 @@ export default {
   methods: {
     handleShow (index, row) {
       this.order_details = row.order_details
+      this.currentOrderId = row.id
       this.orderDialogVisible = true
       // console.log(row)
     },
-    handleDetailShow (index, row) {
+    handleDetailBack (index, row) {
       console.log(row)
-    },
-    handleDetailDelete (index, row) {
-      console.log(row)
+      updateOrderItem({
+        id: row.id,
+        state: 2
+      }).then(res => {
+        row.state=2
+        updateOrder({
+          id: this.currentOrderId,
+          state: 2
+        })
+      })
     },
     onpick (pick) {
       console.log(pick[0])
@@ -268,7 +226,7 @@ export default {
     handleOrderShow (index, row) {
       console.log(index, row)
       this.showDetail = true
-      this.productForm = this.userTable[index]
+      this.orderDetailForm = this.userTable[index]
       this.orderDialogVisible = true
     },
     handleDelete (index, row) {

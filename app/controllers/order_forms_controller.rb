@@ -55,6 +55,6 @@ class OrderFormsController < ApplicationController
     end
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.fetch(:order, {})
+      params.permit(:time, :remark, :total_price, :score, :state)
     end
 end

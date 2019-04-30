@@ -11,6 +11,7 @@ class CreateOrderDetails < ActiveRecord::Migration[5.2]
       t.string :remake
       t.integer :price, :null => false
       t.integer :origin_price, :null => false
+      t.integer :state, :null => false, :default => 1
 
       t.timestamps
     end
