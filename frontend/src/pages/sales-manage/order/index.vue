@@ -1,6 +1,31 @@
 <template>
   <d2-container>
-    <el-dialog style="margin-top: 0;" :visible.sync="productDialogFormVisible">
+    <el-dialog title="订单详情" style="margin-top: 0;" :visible.sync="orderDialogVisible">
+      <el-table :data="order_details" size="mini">
+        <el-table-column property="product_id" label="产品id" width="150"></el-table-column>
+        <el-table-column property="price" label="价格" width="200"></el-table-column>
+        <el-table-column property="number" label="数量"></el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button
+                size="mini"
+                type="info"
+                @click="handleDetailShow(scope.$index, scope.row)">编辑</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDetailDelete(scope.$index, scope.row)">删除</el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-dialog
+        width="30%"
+        title="内层 Dialog"
+        :visible.sync="innerVisible"
+        append-to-body>
+      </el-dialog>
       <!-- <el-form  size="mini" :model="productForm" ref="productForm" :rules="productRules">
         <el-form-item label="产品名称" prop="name" :label-width="formLabelWidth">
           <el-input v-model="productForm.name" autocomplete="off"></el-input>
@@ -149,7 +174,9 @@ export default {
   },
   data () {
     return {
-      productDialogFormVisible: false,
+      innerVisible: false,
+      order_details: [],
+      orderDialogVisible: false,
       formLabelWidth: '120px',
       productForm: {
         name: '',
@@ -219,16 +246,27 @@ export default {
     }
   },
   methods: {
+    handleShow (index, row) {
+      this.order_details = row.order_details
+      this.orderDialogVisible = true
+      // console.log(row)
+    },
+    handleDetailShow (index, row) {
+      console.log(row)
+    },
+    handleDetailDelete (index, row) {
+      console.log(row)
+    },
     onpick (pick) {
       console.log(pick[0])
       console.log(pick[1])
       console.log(this.form.showedDataValue)
     },
-    handleShow (index, row) {
+    handleOrderShow (index, row) {
       console.log(index, row)
       this.showDetail = true
       this.productForm = this.userTable[index]
-      this.productDialogFormVisible = true
+      this.orderDialogVisible = true
     },
     handleDelete (index, row) {
       console.log(index, row)
@@ -249,7 +287,8 @@ export default {
         title: '分页变化',
         message: `当前第${val.current}页 共${val.total}条 每页${val.size}条`
       })
-      this.page = val
+      console.log(val)
+      this.page.current = val.current
       // nextTick 只是为了优化示例中 notify 的显示
       this.$nextTick(() => {
         this.handleFormSubmit()
@@ -258,20 +297,20 @@ export default {
     handleFormSubmit () {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          console.log(this.page)
           // TODO 做一些转换 控制器也要做
           getOrders({
             ...this.form,
             ...this.page
           }).then(res => {
-            console.log(res)
+            // console.log(res)
             this.userTable = res.order_forms.map(item => {
               item.date = new Date(item.time)
-              // console.log(item)
               return item
             })
-            // this.page.pageCurrent = res.currentPage
-            // // this.page.pageSize = res.pageSize
-            // this.page.pageTotal = res.total
+            this.page.pageCurrent = res.meta.currentPage
+            // this.page.pageSize = res.pageSize
+            this.page.pageTotal = res.meta.total
           })
         } else {
           this.$notify.error({
