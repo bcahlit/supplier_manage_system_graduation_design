@@ -1,21 +1,21 @@
 <template>
   <d2-container>
-    <el-dialog style="margin-top: 0;" :visible.sync="customerDialogFormVisible">
-      <el-form  size="mini" :model="customerForm" ref="customerForm" :rules="customerRules">
+    <el-dialog style="margin-top: 0;" :visible.sync="supplierDialogFormVisible">
+      <el-form  size="mini" :model="supplierForm" ref="supplierForm" :rules="supplierRules">
         <el-form-item label="手机号" prop="phone" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.phone" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.phone" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="name" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.name" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="地址" prop="address" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.address" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.address" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="微信" prop="wechart" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.wechart" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.wechart" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="来源" prop="origin" :label-width="formLabelWidth">
-          <el-select v-model="customerForm.origin" placeholder="请选择评级">
+          <el-select v-model="supplierForm.origin" placeholder="请选择评级">
             <el-option label="日常" value=0></el-option>
             <el-option label="活动" value=1></el-option>
             <el-option label="介绍" value=2></el-option>
@@ -23,43 +23,43 @@
           </el-select>
         </el-form-item>
         <el-form-item label="年龄" prop="age" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.age" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.age" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="性别" prop="sex" :label-width="formLabelWidth">
-          <el-select v-model="customerForm.sex" placeholder="请选择评级">
+          <el-select v-model="supplierForm.sex" placeholder="请选择评级">
             <el-option label="女" value=0></el-option>
             <el-option label="男" value=1></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="等级" prop="level" :label-width="formLabelWidth">
-          <el-select v-model="customerForm.level" placeholder="请选择评级">
+          <el-select v-model="supplierForm.level" placeholder="请选择评级">
             <el-option label="普通会员" value=0></el-option>
             <el-option label="白银会员" value=1></el-option>
             <el-option label="黄金会员" value=2></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="qq号" prop="qq" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.qq" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.qq" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="email" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.email" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.email" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="婚姻" prop="marriage" :label-width="formLabelWidth">
-          <el-select v-model="customerForm.marriage" placeholder="请选择评级">
+          <el-select v-model="supplierForm.marriage" placeholder="请选择评级">
             <el-option label="是" value=0></el-option>
             <el-option label="否" value=1></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="生日" prop="birthday" :label-width="formLabelWidth">
-          <el-date-picker v-model="customerForm.birthday" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker v-model="supplierForm.birthday" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="职业" prop="work" :label-width="formLabelWidth">
-          <el-input v-model="customerForm.work" autocomplete="off"></el-input>
+          <el-input v-model="supplierForm.work" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancaleAddCustomer">取 消</el-button>
-        <el-button type="primary" @click="AddCustomerEvent">确 定</el-button>
+        <el-button @click="cancaleAddSupplier">取 消</el-button>
+        <el-button type="primary" @click="AddSupplierEvent">确 定</el-button>
       </div>
     </el-dialog>
     <el-form
@@ -95,7 +95,7 @@
 
       <el-form-item>
         <el-button
-          @click="customerDialogFormVisible = true">
+          @click="supplierDialogFormVisible = true">
           <d2-icon name="plus"/>
           添加
         </el-button>
@@ -229,7 +229,7 @@
 <script>
 
 // import { BusinessTable1List } from '@api/demo.business.table.1'
-import { getCustomers, updateCustomer, addCustomer, deleteCustomer } from '@api/salesManager/customer'
+import { getSuppliers, updateSupplier, addSupplier, deleteSupplier } from '@api/salesManager/supplier'
 export default {
   components: {
     'DemoPageHeader': () => import('./componnets/PageHeader'),
@@ -237,9 +237,9 @@ export default {
   },
   data () {
     return {
-      customerDialogFormVisible: false,
+      supplierDialogFormVisible: false,
       formLabelWidth: '120px',
-      customerForm: {
+      supplierForm: {
         phone: '',
         name: '',
         address: '',
@@ -254,7 +254,7 @@ export default {
         birthday: '',
         work: ''
       },
-      customerRules: {
+      supplierRules: {
         // type: [ { required: true, message: '请选择一个状态', trigger: 'change' } ],
         phone: [ { required: true, message: '请输入手机号', trigger: 'change' } ]
       },
@@ -280,18 +280,18 @@ export default {
     handleShow (index, row) {
       console.log(index, row)
       this.showDetail = true
-      this.customerForm = this.userTable[index]
-      this.customerDialogFormVisible = true
+      this.supplierForm = this.userTable[index]
+      this.supplierDialogFormVisible = true
     },
     handleEdit (index, row) {
       console.log(index, row)
       this.isEdit = true
-      this.customerForm = this.userTable[index]
-      this.customerDialogFormVisible = true
+      this.supplierForm = this.userTable[index]
+      this.supplierDialogFormVisible = true
     },
     handleDelete (index, row) {
       console.log(index, row)
-      deleteCustomer({ id: row.id }).then(res => {
+      deleteSupplier({ id: row.id }).then(res => {
         console.log(res)
         this.handleFormSubmit()
         this.$message({
@@ -300,41 +300,41 @@ export default {
         })
       })
     },
-    cancaleAddCustomer () {
-      this.$refs['customerForm'].resetFields()
-      this.customerDialogFormVisible = false
+    cancaleAddSupplier () {
+      this.$refs['supplierForm'].resetFields()
+      this.supplierDialogFormVisible = false
     },
     handleSelectFormReset () {
       this.$refs['ruleForm'].resetFields()
     },
-    AddCustomerEvent () {
+    AddSupplierEvent () {
       if (this.showDetail) {
-        this.cancaleAddCustomer()
+        this.cancaleAddSupplier()
         this.showDetail = false
       }
       if (this.isEdit) {
-        updateCustomer({
-          ...this.customerForm
+        updateSupplier({
+          ...this.supplierForm
         }).then(res => {
           console.log(res)
-          this.cancaleAddCustomer()
+          this.cancaleAddSupplier()
           this.form.phone = res.phone
           this.handleFormSubmit()
           this.isEdit = false
         })
       }
       if (this.isAddCustom) {
-        addCustomer({
-          ...this.customerForm
+        addSupplier({
+          ...this.supplierForm
         }).then(res => {
           console.log(res)
-          this.cancaleAddCustomer()
+          this.cancaleAddSupplier()
           this.form.phone = res.phone
           this.handleFormSubmit()
           this.isAddCustom = false
         })
       }
-      // console.log(this.customerForm)
+      // console.log(this.supplierForm)
     },
     handlePaginationChange (val) {
       this.$notify({
@@ -350,11 +350,11 @@ export default {
     handleFormSubmit () {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          getCustomers({
+          getSuppliers({
             ...this.form,
             ...this.page
           }).then(res => {
-            this.userTable = res.customers
+            this.userTable = res.suppliers
             this.page.pageCurrent = res.currentPage
             this.page.pageSize = res.pageSize
             this.page.pageTotal = res.total
@@ -371,7 +371,7 @@ export default {
     handleFormReset () {
       this.$refs.form.resetFields()
     },
-    handleCustomerNew () {
+    handleSupplierNew () {
       this.$notify.error({
         title: '错误',
         message: '表单校验失败'

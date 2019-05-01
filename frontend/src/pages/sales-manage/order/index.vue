@@ -77,7 +77,7 @@
 
       <el-table-column label="客户名" width="160" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          {{scope.row.customer.name}}
+          {{scope.row.supplier.name}}
         </template>
       </el-table-column>
 
@@ -285,7 +285,7 @@ export default {
     handleFormReset () {
       this.$refs.form.resetFields()
     },
-    handleCustomerNew () {
+    handleSupplierNew () {
       this.$notify.error({
         title: '错误',
         message: '表单校验失败'

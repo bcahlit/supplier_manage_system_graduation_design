@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_04_25_085346) do
 
-  create_table "customers", force: :cascade do |t|
+  create_table "suppliers", force: :cascade do |t|
     t.string "phone", null: false
     t.string "name"
     t.string "address"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
   end
 
   create_table "order_forms", force: :cascade do |t|
-    t.integer "customer_id"
+    t.integer "supplier_id"
     t.integer "time", null: false
     t.string "remark"
     t.integer "total_price", null: false
@@ -65,18 +65,18 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.integer "state", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_order_forms_on_customer_id"
+    t.index ["supplier_id"], name: "index_order_forms_on_supplier_id"
   end
 
   create_table "points", force: :cascade do |t|
     t.string "item_name", null: false
     t.integer "value", null: false
-    t.integer "customer_id"
+    t.integer "supplier_id"
     t.integer "order_form_id"
     t.integer "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_points_on_customer_id"
+    t.index ["supplier_id"], name: "index_points_on_supplier_id"
     t.index ["order_form_id"], name: "index_points_on_order_form_id"
   end
 

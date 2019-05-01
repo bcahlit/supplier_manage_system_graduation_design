@@ -1,30 +1,30 @@
 import request from '@/plugin/axios'
 
-export function getCustomers (data) {
+export function getSuppliers (data) {
   console.log(data)
   return request({
-    url: '/customers',
+    url: '/suppliers',
     method: 'get',
     params: data
   })
 }
-export function addCustomer (data) {
+export function addSupplier (data) {
   return request({
-    url: '/customers',
+    url: '/suppliers',
     method: 'post',
     data
   })
 }
-export function deleteCustomer (data) {
+export function deleteSupplier (data) {
   return request({
-    url: `/customers/${data.id}`,
+    url: `/suppliers/${data.id}`,
     method: 'delete'
   })
 }
-export function updateCustomer (data) {
+export function updateSupplier (data) {
   // let cId=data.id
   return request({
-    url: `/customers/${data.id}`,
+    url: `/suppliers/${data.id}`,
     method: 'PATCH',
     data
   })

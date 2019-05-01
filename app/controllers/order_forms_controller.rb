@@ -4,8 +4,8 @@ class OrderFormsController < ApplicationController
   # GET /orders
   def index
     if params[:phone] != ''
-      @customer = Customer.find_by phone: params[:phone]
-      @orders = @customer.order_forms.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
+      @supplier = Supplier.find_by phone: params[:phone]
+      @orders = @supplier.order_forms.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
     else
       @orders = OrderForm.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
     end

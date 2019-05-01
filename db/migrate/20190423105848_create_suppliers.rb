@@ -1,6 +1,6 @@
-class CreateCustomers < ActiveRecord::Migration[5.2]
+class CreateSuppliers < ActiveRecord::Migration[5.2]
   def change
-    create_table :customers do |t|
+    create_table :suppliers do |t|
       t.string :phone, :unique => true, :null => false
       #Ex:- :null => false
       t.string :name

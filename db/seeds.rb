@@ -63,7 +63,7 @@ end
 end
 
 100.times do
-  customer = Customer.create!({
+  supplier = Supplier.create!({
     phone: rand(18000000000..18999999999).to_s,
     name: Faker::Name.name,
     address: address[rand(0..(address.size-1))],
@@ -74,14 +74,14 @@ end
     email: Faker::Internet.email
   })
   orderTime = rand(1454342400000..1563984000000)
-  thisorder = customer.order_forms.create!({
+  thisorder = supplier.order_forms.create!({
     time: orderTime,
     total_price: rand(100..600),
     score:  rand(100..600)
   })
 
   # TODO
-  customer.points.create!({
+  supplier.points.create!({
     item_name: Faker::Name.name,
     value: rand(100..600),
     time: orderTime,

@@ -63,11 +63,11 @@ const frameIn = [
     path: '/sales_manage',
     name: 'sales_manage',
     auth: true,
-    redirect: { name: 'customer' },
+    redirect: { name: 'supplier' },
     component: layoutHeaderAside,
     children: [
       { path: 'sales', name: `sales`, component: () => import('@/pages/sales-manage/sales'), meta: { auth: true, title: '销售' } },
-      { path: 'customer', name: `customer`, component: () => import('@/pages/sales-manage/customer'), meta: { auth: true, title: '客户管理' } },
+      { path: 'supplier', name: `supplier`, component: () => import('@/pages/sales-manage/supplier'), meta: { auth: true, title: '供应商管理' } },
       { path: 'points', name: `points`, component: () => import('@/pages/sales-manage/points'), meta: { auth: true, title: '积分管理' } },
       { path: 'order', name: 'order', component: () => import('@/pages/sales-manage/order'), meta: { auth: true, title: '订单管理' } }
     ]

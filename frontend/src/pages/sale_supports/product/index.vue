@@ -309,7 +309,7 @@ export default {
     handleFormReset () {
       this.$refs.form.resetFields()
     },
-    handleCustomerNew () {
+    handleSupplierNew () {
       this.$notify.error({
         title: '错误',
         message: '表单校验失败'

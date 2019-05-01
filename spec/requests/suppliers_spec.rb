@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "Customers", type: :request do
-  describe "GET /customers" do
+RSpec.describe "Suppliers", type: :request do
+  describe "GET /suppliers" do
     it "works! (now write some real specs)" do
-      get customers_path
+      get suppliers_path
       expect(response).to have_http_status(200)
     end
   end
