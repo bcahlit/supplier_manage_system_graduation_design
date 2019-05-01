@@ -22,6 +22,7 @@ export default [
     title: '销售管理',
     icon: 'area-chart',
     children: [
+      { path: '/sales_manage/sales', title: '销售', icon: 'handshake-o' },
       { path: '/sales_manage/customer', title: '客户管理', icon: 'user-o' },
       { path: '/sales_manage/points', title: '积分管理', icon: 'gg-circle' },
       { path: '/sales_manage/order', title: '订单管理', icon: 'first-order' }
