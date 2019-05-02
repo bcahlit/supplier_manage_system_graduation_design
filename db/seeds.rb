@@ -49,51 +49,68 @@ end
                         detail: sentence[rand(0..(sentence.size-1))], degree: rand(0..2))
 end
 
-40.times do
+def createProduct(name, classify)
   Product.create!({
-    name: Faker::Name.name,
-    total: rand(5..200),
-    number: rand(100000..999999).to_s,
-    introduction: "我是一段简介并且是html的~",
-    time: rand(1554048000000..1556985600000),
-    price: rand(60..600),
-    color: "黑色",
-    size: 'xl'
+    name: name,
+    total: number(5..200),
+    number: rand(100000..999999).to_s
+    classify: classify
   })
 end
+# def createSupplier(name){
 
-100.times do
+# }
+["面包","饮料","米饭"].each do |name|
+  createProduct(name,"食品")
+end
+["空乘服饰","环卫服饰", "安保服饰", "销售服饰"].each do |name|
+  createProduct(name,"服饰")
+end
+["键盘","打印机","打印纸"].each do |name|
+  createProduct(name, "办公设备")
+end
+["金属探测仪","小推车"].each do |name|
+  createProduct(name, "机械设备")
+end
+["安检扫描仪","空调","服务器"].each do |name|
+  createProduct(name, "基础设备")
+end
+["插座", "风扇", "照明灯具"].each do |name|
+  createProduct(name,"建筑设备")
+end
+["苹果","橘子","李子","火龙果","芒果"].each do |name|
+  createProduct(name, "水果")
+end
+
+createProduct("系统维护服务", "服务")
+
+[
+  "食品公司1",
+  "食品公司2",
+  "水果公司1",
+  "水果公司2",
+  "机械公司1",
+  "机械公司2",
+  "设备公司1",
+  "设备公司2",
+  "软件公司1",
+  "软件公司2"
+].each do |name|
   supplier = Supplier.create!({
     phone: rand(18000000000..18999999999).to_s,
-    name: Faker::Name.name,
+    name: name,
     address: address[rand(0..(address.size-1))],
-    wechart: 'wx'+rand(36**8).to_s(36),
-    origin: rand(0..3),
-    age: rand(15..75),
-    birthday: rand(26236800..1067875200),
+    concat: Faker::Name.name,
     email: Faker::Internet.email
   })
-  orderTime = rand(1454342400000..1563984000000)
-  thisorder = supplier.order_forms.create!({
-    time: orderTime,
-    total_price: rand(100..600),
-    score:  rand(100..600)
-  })
-
-  # TODO
-  supplier.points.create!({
-    item_name: Faker::Name.name,
-    value: rand(100..600),
-    time: orderTime,
-    order_form: thisorder
-  })
 end
 
-200.times do
-  OrderForm.find(rand(1..99)).order_details.create!({
-    product: Product.find(rand(1..39)),
-    number: 1,
-    price: rand(60..400),
-    origin_price: rand(80..500),
-  })
-end
+
+# 20.times do
+#   OrderForm.find(rand(1..99)).order_details.create!({
+#     product: Product.find(rand(1..39)),
+#     number: 1,
+#     price: rand(60..400),
+#     origin_price: rand(80..500),
+#   })
+# end

@@ -5,11 +5,11 @@ class CreateProducts < ActiveRecord::Migration[5.2]
       #Ex:- :null => false
       t.string :number, :null => false
       t.string :type
-      # 备注
       t.string :remark
+      # 备注
       t.string :color
-      t.string :size, :null => false
-      t.integer :classify
+      t.string :classify
+      # 0 食品 1 服饰 2 办公设备 3 机械设备 4 建筑设备 5 水果 6 系统维护服务
 
       t.timestamps
     end
