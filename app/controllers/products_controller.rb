@@ -3,26 +3,27 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    # todo 按照不同的分类查找
-    if params[:name]
-      @products = Product.where("name LIKE ?", params[:name]+'%').page(params[:current] || 1).per(params[:size] || 10)
-      @total = Product.where("name LIKE ?", params[:name]+'%').count
-    elsif params[:number]
-      @total = Product.where("number LIKE ?", params[:number]+'%').count
-      @products = Product.where("number LIKE ?", params[:number]+'%').page(params[:current] || 1).per(params[:size] || 10)
-    elsif params[:size]
-      @total = Product.where("size LIKE ?", params[:size]+'%').count
-      @products = Product.where("size LIKE ?", params[:size]+'%').page(params[:current] || 1).per(params[:size] || 10)
-    elsif params[:band]
-      @total = Product.where("band LIKE ?", params[:band]+'%').count
-      @products = Product.where("band LIKE ?", params[:band]+'%').page(params[:current] || 1).per(params[:size] || 10)
-    elsif params[:classify]
-      @total = Product.where("classify LIKE ?", params[:classify]+'%').count
-      @products = Product.where("classify LIKE ?", params[:classify]+'%').page(params[:current] || 1).per(params[:size] || 10)
-    elsif params[:introduction]
-      @total = Product.where("introduction LIKE ?", params[:introduction]+'%').count
-      @products = Product.where("introduction LIKE ?", params[:introduction]+'%').page(params[:current] || 1).per(params[:size] || 10)
-    end
+    # todo 更改查询逻辑
+    # if params[:name]
+    #   @products = Product.where("name LIKE ?", params[:name]+'%').page(params[:current] || 1).per(params[:size] || 10)
+    #   @total = Product.where("name LIKE ?", params[:name]+'%').count
+    # elsif params[:number]
+    #   @total = Product.where("number LIKE ?", params[:number]+'%').count
+    #   @products = Product.where("number LIKE ?", params[:number]+'%').page(params[:current] || 1).per(params[:size] || 10)
+    # elsif params[:size]
+    #   @total = Product.where("size LIKE ?", params[:size]+'%').count
+    #   @products = Product.where("size LIKE ?", params[:size]+'%').page(params[:current] || 1).per(params[:size] || 10)
+    # elsif params[:band]
+    #   @total = Product.where("band LIKE ?", params[:band]+'%').count
+    #   @products = Product.where("band LIKE ?", params[:band]+'%').page(params[:current] || 1).per(params[:size] || 10)
+    # elsif params[:classify]
+    #   @total = Product.where("classify LIKE ?", params[:classify]+'%').count
+    #   @products = Product.where("classify LIKE ?", params[:classify]+'%').page(params[:current] || 1).per(params[:size] || 10)
+    # elsif params[:introduction]
+    #   @total = Product.where("introduction LIKE ?", params[:introduction]+'%').count
+    #   @products = Product.where("introduction LIKE ?", params[:introduction]+'%').page(params[:current] || 1).per(params[:size] || 10)
+    # end
+    @products = Product.page(params[:current] || 1).per(params[:size] || 10)
     render json: {products: @products, currentPage: @products.current_page, pageSize: @products.count, total: @total}
   end
 
@@ -64,6 +65,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.permit(:name, :total, :number, :introduction, :type, :time, :remark, :price, :color, :size, :band, :classify)
+      params.permit(:name, :number, :type, :remark, :color, :size, :classify)
     end
 end

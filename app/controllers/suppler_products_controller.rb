@@ -3,9 +3,9 @@ class SupplerProductsController < ApplicationController
 
   # GET /suppler_products
   def index
-    @suppler_products = SupplerProduct.all
+    @suppler_products = SupplerProduct.page(params[:current] || 1).per(params[:size] || 10)
 
-    render json: @suppler_products
+    render json: @suppler_products, meta: pagination_dict(@suppler_products)
   end
 
   # GET /suppler_products/1
@@ -46,6 +46,6 @@ class SupplerProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def suppler_product_params
-      params.fetch(:suppler_product, {})
+      params.permit(:name, :number, :type, :remark, :remark, :color, :size, :classify)
     end
 end

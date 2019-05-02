@@ -12,6 +12,7 @@ class CreateSuppliers < ActiveRecord::Migration[5.2]
       t.integer :state, :default => 0
       #Ex:- :default =>''
       t.string :concat
+      # 联系人
       t.string :zip
       t.string :address
       t.string :bank_number

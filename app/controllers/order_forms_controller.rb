@@ -3,12 +3,9 @@ class OrderFormsController < ApplicationController
 
   # GET /orders
   def index
-    if params[:phone] != ''
-      @supplier = Supplier.find_by phone: params[:phone]
-      @orders = @supplier.order_forms.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
-    else
-      @orders = OrderForm.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
-    end
+    # TODO 进行一些排序以及筛选
+    @orders = OrderForm.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
+
     render json: @orders, meta: pagination_dict(@orders)
   end
 
@@ -55,6 +52,6 @@ class OrderFormsController < ApplicationController
     end
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.permit(:time, :remark, :total_price, :score, :state)
+      params.permit(:supplier, :user, :product, :reviewer, :time, :number, :remark, :priority, :state)
     end
 end

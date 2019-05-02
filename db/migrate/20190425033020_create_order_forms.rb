@@ -3,11 +3,13 @@ class CreateOrderForms < ActiveRecord::Migration[5.2]
     create_table :order_forms do |t|
       t.references :supplier
       t.references :product      
-      t.references :operator, foreign_key: { to_table: :users }
+      t.references :user, foreign_key: true
+      # 采购计划申请人
       t.references :reviewer, foreign_key: { to_table: :users }
       # Example: t.column "first_name", :string
       t.integer :time, :null => false
       t.integer :number, :null => false
+      t.integer :total_price
       #Ex:- :null => false 数量
       t.string :remark
       t.integer :priority, :null => false, :default => 0

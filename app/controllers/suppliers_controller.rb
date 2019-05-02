@@ -46,7 +46,8 @@ class SuppliersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def supplier_params
-      params.permit(:phone, :name, :sex, :origin, :level, :wechart,
-        :qq, :email, :state, :age, :marriage, :birthday, :work)
+      params.permit(:phone, :name, :type, :address, :level, :email,
+        :state, :concat, :zip, :address, :bank_number, :reputation, :fax,
+        :remark, :timely, :aftersales, :componiship)
     end
 end

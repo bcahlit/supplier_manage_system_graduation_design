@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :notes
   resources :schedules
   resources :suppliers
+  resources :supplier_products
   resources :products
   resources :order_forms
   
