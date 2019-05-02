@@ -10,26 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_25_085346) do
-
-  create_table "suppliers", force: :cascade do |t|
-    t.string "phone", null: false
-    t.string "name"
-    t.string "address"
-    t.string "wechart"
-    t.integer "origin", default: 0
-    t.integer "age"
-    t.string "sex"
-    t.integer "level", default: 0
-    t.string "qq"
-    t.string "email"
-    t.integer "state", default: 0
-    t.boolean "marriage"
-    t.integer "birthday"
-    t.string "work"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 2019_05_02_071837) do
 
   create_table "notes", force: :cascade do |t|
     t.string "title"
@@ -40,59 +21,32 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
-  create_table "order_details", force: :cascade do |t|
-    t.integer "order_form_id"
-    t.integer "product_id"
-    t.integer "number", default: 1, null: false
-    t.string "type"
-    t.integer "time"
-    t.string "remake"
-    t.integer "price", null: false
-    t.integer "origin_price", null: false
-    t.integer "state", default: 1, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["order_form_id"], name: "index_order_details_on_order_form_id"
-    t.index ["product_id"], name: "index_order_details_on_product_id"
-  end
-
   create_table "order_forms", force: :cascade do |t|
     t.integer "supplier_id"
+    t.integer "product_id"
+    t.integer "operator_id"
+    t.integer "reviewer_id"
     t.integer "time", null: false
+    t.integer "number", null: false
     t.string "remark"
-    t.integer "total_price", null: false
-    t.integer "score", null: false
+    t.integer "priority", default: 0, null: false
     t.integer "state", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["operator_id"], name: "index_order_forms_on_operator_id"
+    t.index ["product_id"], name: "index_order_forms_on_product_id"
+    t.index ["reviewer_id"], name: "index_order_forms_on_reviewer_id"
     t.index ["supplier_id"], name: "index_order_forms_on_supplier_id"
-  end
-
-  create_table "points", force: :cascade do |t|
-    t.string "item_name", null: false
-    t.integer "value", null: false
-    t.integer "supplier_id"
-    t.integer "order_form_id"
-    t.integer "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["supplier_id"], name: "index_points_on_supplier_id"
-    t.index ["order_form_id"], name: "index_points_on_order_form_id"
   end
 
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "total", null: false
     t.string "number", null: false
     t.string "type"
-    t.integer "time"
     t.string "remark"
-    t.integer "price"
     t.string "color"
     t.string "size", null: false
-    t.string "band"
     t.integer "classify"
-    t.string "introduction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -106,6 +60,40 @@ ActiveRecord::Schema.define(version: 2019_04_25_085346) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_schedules_on_user_id"
+  end
+
+  create_table "suppler_products", force: :cascade do |t|
+    t.integer "supplier_id"
+    t.integer "product_id"
+    t.string "commit"
+    t.integer "price"
+    t.integer "back_rate"
+    t.integer "standard"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_suppler_products_on_product_id"
+    t.index ["supplier_id"], name: "index_suppler_products_on_supplier_id"
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "phone", null: false
+    t.string "name"
+    t.integer "type"
+    t.string "address"
+    t.integer "level", default: 0
+    t.string "email"
+    t.integer "state", default: 0
+    t.string "concat"
+    t.string "zip"
+    t.string "bank_number"
+    t.integer "reputation"
+    t.string "fax"
+    t.string "remark"
+    t.integer "timely", default: 100
+    t.integer "aftersales", default: 100
+    t.integer "componiship", default: 100
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

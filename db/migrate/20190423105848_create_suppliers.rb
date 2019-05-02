@@ -4,20 +4,26 @@ class CreateSuppliers < ActiveRecord::Migration[5.2]
       t.string :phone, :unique => true, :null => false
       #Ex:- :null => false
       t.string :name
+      t.integer :type
       t.string :address
-      t.string :wechart
-      t.integer :origin, :default => 0
-      t.integer :age
-      t.string :sex
       t.integer :level, :default => 0
       #Ex:- :default =>''
-      t.string :qq
       t.string :email
       t.integer :state, :default => 0
       #Ex:- :default =>''
-      t.boolean :marriage
-      t.integer :birthday
-      t.string :work
+      t.string :concat
+      t.string :zip
+      t.string :address
+      t.string :bank_number
+      t.integer :reputation
+      t.string :fax
+      t.string :remark
+      t.integer :timely, :default => 100
+      #Ex:- :default =>'' 交货及时程度
+      t.integer :aftersales, :default => 100
+      #Ex:- :default =>''
+      t.integer :componiship, :default => 100
+      #Ex:- :default =>''合作兼容性
 
       t.timestamps
     end
