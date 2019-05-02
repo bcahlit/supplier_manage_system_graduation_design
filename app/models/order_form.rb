@@ -1,5 +1,3 @@
 class OrderForm < ApplicationRecord
-  belongs_to :supplier
-  has_many :order_details, dependent: :destroy
-  has_many :points, dependent: :destroy
+  belongs_to :operator, class_name: "user", foreign_key: "user_id"
 end
