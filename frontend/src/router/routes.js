@@ -1,5 +1,3 @@
-import demo from './modules/demo'
-
 import layoutHeaderAside from '@/layout/header-aside'
 
 /**
@@ -84,7 +82,53 @@ const frameIn = [
       { path: 'message', name: 'message', component: () => import('@/pages/sale_supports/message'), meta: { auth: true, title: '订单管理' } }
     ]
   },
-  demo
+  {
+    path: '/admin',
+    name: 'admin',
+    auth: true,
+    redirect: { name: 'user' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'user', name: `user`, component: () => import('@/pages/admin/user'), meta: { auth: true, title: '用户管理' } }
+    ]
+  },
+  {
+    path: '/data_analysis',
+    name: 'data_analysis',
+    auth: true,
+    redirect: { name: 'ssupplier' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'ssupplier', name: `ssupplier`, component: () => import('@/pages/data_analysis/supplier'), meta: { auth: true, title: '供应商统计' } }
+    ]
+  },
+  {
+    path: '/supplier',
+    name: 'supplier',
+    auth: true,
+    redirect: { name: 'dossier' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'dossier', name: `dossier`, component: () => import('@/pages/supplier/dossier'), meta: { auth: true, title: '档案管理' } },
+      { path: 'order', name: `order`, component: () => import('@/pages/supplier/order'), meta: { auth: true, title: '订单管理' } },
+      { path: 'product_manage', name: `product_manage`, component: () => import('@/pages/supplier/product_manage'), meta: { auth: true, title: '产品管理' } },
+      { path: 'quality_evaluation', name: `quality_evaluation`, component: () => import('@/pages/supplier/quality_evaluation'), meta: { auth: true, title: '质量管理' } }
+    ]
+  },
+  {
+    path: '/puches',
+    name: 'puches',
+    auth: true,
+    redirect: { name: 'application' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'application', name: `application`, component: () => import('@/pages/puches/application'), meta: { auth: true, title: '申请' } },
+      { path: 'ratify', name: `ratify`, component: () => import('@/pages/puches/ratify'), meta: { auth: true, title: '审批' } },
+      { path: 'product', name: `product`, component: () => import('@/pages/puches/product'), meta: { auth: true, title: '产品库管理' } },
+      { path: 'arival', name: `arival`, component: () => import('@/pages/puches/arival'), meta: { auth: true, title: '到货情况' } },
+      { path: 'evaluation', name: `evaluation`, component: () => import('@/pages/puches/evaluation'), meta: { auth: true, title: '评价' } }
+    ]
+  }
 ]
 
 /**

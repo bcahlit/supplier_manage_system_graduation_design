@@ -16,7 +16,8 @@ class CreateSuppliers < ActiveRecord::Migration[5.2]
       t.string :zip
       t.string :address
       t.string :bank_number
-      t.integer :reputation
+      t.integer :reputation, :default => 100
+      #Ex:- :default =>''
       t.string :fax
       t.string :remark
       t.integer :timely, :default => 100

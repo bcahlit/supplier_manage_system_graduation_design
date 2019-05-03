@@ -52,8 +52,7 @@ end
 def createProduct(name, classify)
   Product.create!({
     name: name,
-    total: number(5..200),
-    number: rand(100000..999999).to_s
+    number: rand(100000..999999).to_s,
     classify: classify
   })
 end

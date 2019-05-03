@@ -24,19 +24,20 @@ ActiveRecord::Schema.define(version: 2019_05_02_071837) do
   create_table "order_forms", force: :cascade do |t|
     t.integer "supplier_id"
     t.integer "product_id"
-    t.integer "operator_id"
+    t.integer "user_id"
     t.integer "reviewer_id"
     t.integer "time", null: false
     t.integer "number", null: false
+    t.integer "total_price"
     t.string "remark"
     t.integer "priority", default: 0, null: false
     t.integer "state", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["operator_id"], name: "index_order_forms_on_operator_id"
     t.index ["product_id"], name: "index_order_forms_on_product_id"
     t.index ["reviewer_id"], name: "index_order_forms_on_reviewer_id"
     t.index ["supplier_id"], name: "index_order_forms_on_supplier_id"
+    t.index ["user_id"], name: "index_order_forms_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -45,8 +46,7 @@ ActiveRecord::Schema.define(version: 2019_05_02_071837) do
     t.string "type"
     t.string "remark"
     t.string "color"
-    t.string "size", null: false
-    t.integer "classify"
+    t.string "classify"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2019_05_02_071837) do
     t.string "concat"
     t.string "zip"
     t.string "bank_number"
-    t.integer "reputation"
+    t.integer "reputation", default: 100
     t.string "fax"
     t.string "remark"
     t.integer "timely", default: 100
