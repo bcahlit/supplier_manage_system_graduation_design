@@ -77,7 +77,7 @@ const frameIn = [
     redirect: { name: 'product' },
     component: layoutHeaderAside,
     children: [
-      { path: 'product', name: `product`, component: () => import('@/pages/sale_supports/product'), meta: { auth: true, title: '产品管理' } },
+      // { path: 'product', name: `product`, component: () => import('@/pages/sale_supports/product'), meta: { auth: true, title: '产品管理' } },
       { path: 'work_report', name: `work_report`, component: () => import('@/pages/sale_supports/work_report'), meta: { auth: true, title: '积分管理' } },
       { path: 'message', name: 'message', component: () => import('@/pages/sale_supports/message'), meta: { auth: true, title: '订单管理' } }
     ]

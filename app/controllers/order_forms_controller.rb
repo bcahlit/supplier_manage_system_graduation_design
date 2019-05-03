@@ -44,12 +44,7 @@ class OrderFormsController < ApplicationController
     def set_order
       @order = OrderForm.find(params[:id])
     end
-    def make_meta(message, code)
-      {
-        code: code,
-        message: message
-      }
-    end
+
     # Only allow a trusted parameter "white list" through.
     def order_params
       params.permit(:supplier, :user, :product, :reviewer, :time, :number, :remark, :priority, :state)

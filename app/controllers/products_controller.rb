@@ -23,8 +23,14 @@ class ProductsController < ApplicationController
     #   @total = Product.where("introduction LIKE ?", params[:introduction]+'%').count
     #   @products = Product.where("introduction LIKE ?", params[:introduction]+'%').page(params[:current] || 1).per(params[:size] || 10)
     # end
-    @products = Product.page(params[:current] || 1).per(params[:size] || 10)
-    render json: {products: @products, currentPage: @products.current_page, pageSize: @products.count, total: @total}
+    if params[:selectValue]
+      value = params[:selectValue]
+      type = params[:selectType]
+      @products = Product.where("#{type} LIKE ?", '%'+value+'%').page(params[:current] || 1).per(params[:size] || 10)
+    else
+      @products = Product.page(params[:current] || 1).per(params[:size] || 10)
+    end
+    render json: @products, meta: pagination_dict(@products)
   end
 
   # GET /products/1
@@ -65,6 +71,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.permit(:name, :number, :type, :remark, :color, :size, :classify)
+      params.permit(:name, :number, :type, :selectType, :selectValue, :remark, :color, :size, :classify)
     end
 end

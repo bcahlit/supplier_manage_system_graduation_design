@@ -168,12 +168,12 @@ export default {
             .then(() => {
               UserInfo({})
                 .then(res => {
-                  console.log(res)
-                  let uName = res.user_name
-                  delete res.user_name
+                  let uName = res.user.user_name
+                  // delete res.user_name
+                  console.log(uName)
                   this.$store.dispatch('d2admin/user/set', {
                     name: uName,
-                    ...res
+                    ...res.user
                   })
                   // 重定向对象不存在则返回顶层路径
                   this.$router.replace(this.$route.query.redirect || '/')
