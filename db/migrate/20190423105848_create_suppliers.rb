@@ -14,7 +14,6 @@ class CreateSuppliers < ActiveRecord::Migration[5.2]
       t.string :concat
       # 联系人姓名
       t.string :zip
-      t.string :address
       t.string :bank_number
       t.integer :reputation, :default => 100
       #Ex:- :default =>''

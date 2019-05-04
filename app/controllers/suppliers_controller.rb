@@ -4,8 +4,14 @@ class SuppliersController < ApplicationController
   # GET /suppliers
   def index
     # todo: 如果有排序 增加排序功能 还有按其他方式选择
-    @suppliers = Supplier.where("phone LIKE ?", params[:phone]+'%').page(params[:current] || 1).per(params[:size] || 10)
-    render json: {suppliers: @suppliers, currentPage: @suppliers.current_page, pageSize: @suppliers.count, total:  Supplier.where("phone LIKE ?", params[:phone]+'%').count}
+    if params[:selectValue]
+      value = params[:selectValue]
+      type = params[:selectType]
+      @suppliers = Supplier.where("#{type} LIKE ?", '%'+value+'%').page(params[:current] || 1).per(params[:size] || 10)
+    else
+      @suppliers = Supplier.page(params[:current] || 1).per(params[:size] || 10)
+    end
+    render json: @suppliers, each_serializer: SupplierSerializer , meta: pagination_dict(@suppliers)
   end
 
   # GET /suppliers/1
