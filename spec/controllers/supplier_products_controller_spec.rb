@@ -23,10 +23,10 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe SupplerProductsController, type: :controller do
+RSpec.describe SupplierProductsController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # SupplerProduct. As you add validations to SupplerProduct, be sure to
+  # SupplierProduct. As you add validations to SupplierProduct, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -38,12 +38,12 @@ RSpec.describe SupplerProductsController, type: :controller do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # SupplerProductsController. Be sure to keep this updated too.
+  # SupplierProductsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
     it "returns a success response" do
-      suppler_product = SupplerProduct.create! valid_attributes
+      supplier_product = SupplierProduct.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -51,33 +51,33 @@ RSpec.describe SupplerProductsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      suppler_product = SupplerProduct.create! valid_attributes
-      get :show, params: {id: suppler_product.to_param}, session: valid_session
+      supplier_product = SupplierProduct.create! valid_attributes
+      get :show, params: {id: supplier_product.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new SupplerProduct" do
+      it "creates a new SupplierProduct" do
         expect {
-          post :create, params: {suppler_product: valid_attributes}, session: valid_session
-        }.to change(SupplerProduct, :count).by(1)
+          post :create, params: {supplier_product: valid_attributes}, session: valid_session
+        }.to change(SupplierProduct, :count).by(1)
       end
 
-      it "renders a JSON response with the new suppler_product" do
+      it "renders a JSON response with the new supplier_product" do
 
-        post :create, params: {suppler_product: valid_attributes}, session: valid_session
+        post :create, params: {supplier_product: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(suppler_product_url(SupplerProduct.last))
+        expect(response.location).to eq(supplier_product_url(SupplierProduct.last))
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the new suppler_product" do
+      it "renders a JSON response with errors for the new supplier_product" do
 
-        post :create, params: {suppler_product: invalid_attributes}, session: valid_session
+        post :create, params: {supplier_product: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -90,27 +90,27 @@ RSpec.describe SupplerProductsController, type: :controller do
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested suppler_product" do
-        suppler_product = SupplerProduct.create! valid_attributes
-        put :update, params: {id: suppler_product.to_param, suppler_product: new_attributes}, session: valid_session
-        suppler_product.reload
+      it "updates the requested supplier_product" do
+        supplier_product = SupplierProduct.create! valid_attributes
+        put :update, params: {id: supplier_product.to_param, supplier_product: new_attributes}, session: valid_session
+        supplier_product.reload
         skip("Add assertions for updated state")
       end
 
-      it "renders a JSON response with the suppler_product" do
-        suppler_product = SupplerProduct.create! valid_attributes
+      it "renders a JSON response with the supplier_product" do
+        supplier_product = SupplierProduct.create! valid_attributes
 
-        put :update, params: {id: suppler_product.to_param, suppler_product: valid_attributes}, session: valid_session
+        put :update, params: {id: supplier_product.to_param, supplier_product: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the suppler_product" do
-        suppler_product = SupplerProduct.create! valid_attributes
+      it "renders a JSON response with errors for the supplier_product" do
+        supplier_product = SupplierProduct.create! valid_attributes
 
-        put :update, params: {id: suppler_product.to_param, suppler_product: invalid_attributes}, session: valid_session
+        put :update, params: {id: supplier_product.to_param, supplier_product: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -118,11 +118,11 @@ RSpec.describe SupplerProductsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested suppler_product" do
-      suppler_product = SupplerProduct.create! valid_attributes
+    it "destroys the requested supplier_product" do
+      supplier_product = SupplierProduct.create! valid_attributes
       expect {
-        delete :destroy, params: {id: suppler_product.to_param}, session: valid_session
-      }.to change(SupplerProduct, :count).by(-1)
+        delete :destroy, params: {id: supplier_product.to_param}, session: valid_session
+      }.to change(SupplierProduct, :count).by(-1)
     end
   end
 

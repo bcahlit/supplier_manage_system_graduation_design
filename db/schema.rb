@@ -62,17 +62,17 @@ ActiveRecord::Schema.define(version: 2019_05_02_071837) do
     t.index ["user_id"], name: "index_schedules_on_user_id"
   end
 
-  create_table "suppler_products", force: :cascade do |t|
+  create_table "supplier_products", force: :cascade do |t|
     t.integer "supplier_id"
     t.integer "product_id"
     t.string "commit"
     t.integer "price"
-    t.integer "back_rate"
+    t.integer "back_rate", default: 0
     t.integer "standard"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_suppler_products_on_product_id"
-    t.index ["supplier_id"], name: "index_suppler_products_on_supplier_id"
+    t.index ["product_id"], name: "index_supplier_products_on_product_id"
+    t.index ["supplier_id"], name: "index_supplier_products_on_supplier_id"
   end
 
   create_table "suppliers", force: :cascade do |t|

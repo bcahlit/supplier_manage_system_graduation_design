@@ -158,6 +158,10 @@
               size="mini"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button
+              size="mini"
+              type="warning"
+              @click="handleGoProductManage(scope.$index, scope.row)">产品管理</el-button>
           </el-button-group>
         </template>
       </el-table-column>
@@ -219,6 +223,10 @@ export default {
     }
   },
   methods: {
+    handleGoProductManage (index, row){
+      this.$store.commit('setSupplier',row);
+      // this.$router.push({ name: 'product_manage', params: { supplier: row }})
+    },
     handleAddDossierButton (){
       this.supplierDialogFormVisible = true
       this.isAddCustom = true
