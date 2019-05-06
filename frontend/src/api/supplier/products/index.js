@@ -1,6 +1,6 @@
 import request from '@/plugin/axios'
 
-export function getProducts (data) {
+export function getSupplierProducts (data) {
   console.log(data)
   return request({
     url: '/supplier_products',

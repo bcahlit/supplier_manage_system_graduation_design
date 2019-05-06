@@ -1,14 +1,19 @@
 <template>
   <d2-container>
-    <el-dialog style="margin-top: 0;" :visible.sync="productDialogFormVisible">
+    <el-dialog :visible.sync="productDialogFormVisible">
+
       <el-form  size="mini" :model="productForm" ref="productForm" :rules="productRules">
         <!-- TODO 嵌套dialog  选择产品 -->
-        <el-form-item label="产品id" prop="product_id" :label-width="formLabelWidth">
-          <el-input v-model="productForm.product.id" autocomplete="off"></el-input>
+        <el-form-item label="产品名" prop="product_name" :label-width="formLabelWidth">
+          <el-autocomplete
+            class="inline-input"
+            v-model="productForm.name"
+            :fetch-suggestions="querySearch"
+            placeholder="请输入内容"
+            @select="handleProductNameSelect"
+          ></el-autocomplete>
         </el-form-item>
-        <!-- <el-form-item label="类型" prop="type" :label-width="formLabelWidth">
-          <el-input v-model="productForm.type" autocomplete="off"></el-input>
-        </el-form-item> -->
+
         <el-form-item label="价格" prop="price" :label-width="formLabelWidth">
           <el-input v-model="productForm.price" autocomplete="off"></el-input>
         </el-form-item>
@@ -32,30 +37,6 @@
       ref="ruleForm"
       style="margin-bottom: -18px;">
 
-      <!-- <el-form-item label="公司名">
-        <el-input
-          v-model="form.name"
-          placeholder=""
-          style="width: 130px;"/>
-      </el-form-item>
-
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="handleFormSubmit">
-          <d2-icon name="search"/>
-          查询
-        </el-button>
-      </el-form-item>
-
-      <el-form-item>
-        <el-button
-          @click="handleSelectFormReset">
-          <d2-icon name="refresh"/>
-          重置
-        </el-button>
-      </el-form-item> -->
-
       <el-form-item v-if="this.supplier">
         <el-button
           @click="addProductButton">
@@ -64,10 +45,10 @@
         </el-button>
       </el-form-item>
       <el-form-item>
-       {{this.supplier? "公司名："+this.supplier.name : ""}}
+       {{this.supplier? "公司名："+this.supplier.name : ''}}
       </el-form-item>
       <el-form-item>
-        {{this.supplier? "联系人："+this.supplier.concat : ""}}
+        {{this.supplier? "联系人："+this.supplier.concat : ''}}
       </el-form-item>
     </el-form>
     <el-table
@@ -79,7 +60,7 @@
 
       <el-table-column label="产品名" width="160" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          {{scope.row.product.name}}
+          {{scope.row.name}}
         </template>
       </el-table-column>
 
@@ -137,21 +118,27 @@
 
 <script>
 
-import { getProducts, updateProduct, addProduct, deleteProduct } from '@api/supplier/products/'
+import { getProducts } from '@api/saleSupport/product'
+import { getSupplierProducts, updateProduct, addProduct, deleteProduct } from '@api/supplier/products/'
 export default {
   components: {
     'DemoPageFooter': () => import('@/components/PageFooter')
   },
-  created() {
-    this.supplier=this.$store.state.supplier
-    this.fetchProduct()
+  created () {
+    this.supplier = this.$store.state.supplier
+    if (this.supplier) {
+      this.fetchProduct()
+    }
   },
-  activated() {
-    this.supplier=this.$store.state.supplier
-    this.fetchProduct()
+  activated () {
+    this.supplier = this.$store.state.supplier
+    if (this.supplier) {
+      this.fetchProduct()
+    }
   },
   data () {
     return {
+      innerVisible: false,
       productDialogFormVisible: false,
       formLabelWidth: '120px',
       productForm: {},
@@ -179,14 +166,34 @@ export default {
     }
   },
   methods: {
-    fetchProduct () {
-      let supplier_id = this.supplier? this.supplier.id : ""
+    handleProductNameSelect (item) {
+      this.productForm.product_id = item.id
+    },
+    querySearch (queryString, cb) {
       getProducts({
-        supplier_id: supplier_id,
+        selectType: 'name',
+        selectValue: queryString
+      }).then(res => {
+        cb(res.products.map(item => {
+          item.value = item.name
+          return item
+        }))
+      })
+    },
+    addSupplierProductButton () {
+      this.innerVisible = true
+    },
+    fetchProduct () {
+      let supplierId = this.supplier ? this.supplier.id : ''
+      getSupplierProducts({
+        supplier_id: supplierId,
         ...this.page
       }).then(res => {
         // console.log(res)
-        this.userTable = res.supplier_products
+        this.userTable = res.supplier_products.map(item => {
+          item.name = item.product.name
+          return item
+        })
         this.page.pageCurrent = res.meta.currentPage
         // this.page.pageSize = res.pageSize
         this.page.pageTotal = res.meta.total
@@ -209,7 +216,7 @@ export default {
       console.log(index, row)
       deleteProduct({ id: row.id }).then(res => {
         console.log(res)
-        this.handleFormSubmit()
+        this.fetchProduct()
         this.$message({
           message: '删除成功',
           type: 'success'
@@ -217,13 +224,15 @@ export default {
       })
     },
     cancaleAddproduct () {
-      this.$refs['productForm'].resetFields()
+      this.productForm = {}
+      // this.$refs['productForm'].resetFields()
       this.productDialogFormVisible = false
     },
     handleSelectFormReset () {
       this.$refs['ruleForm'].resetFields()
     },
     addProductButton () {
+      this.productForm = {}
       this.productDialogFormVisible = true
       this.isAddCustom = true
     },
@@ -239,19 +248,19 @@ export default {
           console.log(res)
           this.cancaleAddproduct()
           this.form.phone = res.phone
-          this.handleFormSubmit()
+          this.fetchProduct()
           this.isEdit = false
         })
       }
       if (this.isAddCustom) {
+        console.log(this.productForm)
         addProduct({
           ...this.productForm,
           supplier_id: this.supplier.id
         }).then(res => {
           // console.log(res)
           this.cancaleAddproduct()
-          this.form.phone = res.phone
-          this.handleFormSubmit()
+          this.fetchProduct()
           this.isAddCustom = false
         })
       }
@@ -265,31 +274,31 @@ export default {
       this.page = val
       // nextTick 只是为了优化示例中 notify 的显示
       this.$nextTick(() => {
-        this.handleFormSubmit()
+        this.fetchProduct()
       })
     },
-    handleFormSubmit () {
-      this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          // TODO 做一些转换 控制器也要做
-          getProducts({
-            ...this.form,
-            ...this.page
-          }).then(res => {
-            this.userTable = res.supplier_products
-            this.page.pageCurrent = res.meta.currentPage
-            // this.page.pageSize = res.pageSize
-            this.page.pageTotal = res.meta.total
-          })
-        } else {
-          this.$notify.error({
-            title: '错误',
-            message: '表单校验失败'
-          })
-          return false
-        }
-      })
-    },
+    // handleFormSubmit () {
+    //   this.$refs['ruleForm'].validate((valid) => {
+    //     if (valid) {
+    //       // TODO 做一些转换 控制器也要做
+    //       getSupplierProducts({
+    //         ...this.form,
+    //         ...this.page
+    //       }).then(res => {
+    //         this.userTable = res.supplier_products
+    //         this.page.pageCurrent = res.meta.currentPage
+    //         // this.page.pageSize = res.pageSize
+    //         this.page.pageTotal = res.meta.total
+    //       })
+    //     } else {
+    //       this.$notify.error({
+    //         title: '错误',
+    //         message: '表单校验失败'
+    //       })
+    //       return false
+    //     }
+    //   })
+    // },
     handleFormReset () {
       this.$refs.form.resetFields()
     },
@@ -302,3 +311,10 @@ export default {
   }
 }
 </script>
+
+<style>
+/* customClass="customWidth" */
+.customWidth{
+  width:80%;
+}
+</style>
