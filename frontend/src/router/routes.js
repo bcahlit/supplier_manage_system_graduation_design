@@ -66,8 +66,8 @@ const frameIn = [
     children: [
       { path: 'sales', name: `sales`, component: () => import('@/pages/sales-manage/sales'), meta: { auth: true, title: '销售' } },
       { path: 'supplier', name: `supplier`, component: () => import('@/pages/sales-manage/supplier'), meta: { auth: true, title: '供应商管理' } },
-      { path: 'points', name: `points`, component: () => import('@/pages/sales-manage/points'), meta: { auth: true, title: '积分管理' } },
-      { path: 'order', name: 'order', component: () => import('@/pages/sales-manage/order'), meta: { auth: true, title: '订单管理' } }
+      { path: 'points', name: `points`, component: () => import('@/pages/sales-manage/points'), meta: { auth: true, title: '积分管理' } }
+      // { path: 'order', name: 'order', component: () => import('@/pages/sales-manage/order'), meta: { auth: true, title: '订单管理' } }
     ]
   },
   {
