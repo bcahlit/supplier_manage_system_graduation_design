@@ -39,7 +39,7 @@ export default {
           user: true
         }, { root: true })
         // end
-        resolve()
+        resolve(state.info)
       })
     }
   }

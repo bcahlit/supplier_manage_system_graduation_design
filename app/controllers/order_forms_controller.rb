@@ -1,52 +1,60 @@
 class OrderFormsController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy]
+  before_action :set_order_form, only: [:show, :update, :destroy]
 
-  # GET /orders
+  # GET /order_forms
   def index
     # TODO 进行一些排序以及筛选
-    @orders = OrderForm.page(params[:current] || 1).per(params[:size] || 10).order(time: :asc)
+    if params[:user_id]
+      @order_forms = OrderForm.where(user_id: params[:user_id])
+        .where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
+    else
+      @order_forms = current_user.order_form.where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
+    end
 
-    render json: @orders, meta: pagination_dict(@orders)
+    render json: @order_forms,
+           each_serializer: OrderFormSerializer,
+           meta: pagination_dict(@order_forms)
   end
 
-  # GET /orders/1
+  # GET /order_forms/1
   def show
-    render json: @order
+    render json: @order_form
   end
 
-  # POST /orders
+  # POST /order_forms
   def create
-    @order = Order.new(order_params)
+    @order_form = current_user.order_form.build(order_form_params)
 
-    if @order.save
-      render json: @order, status: :created, location: @order
+    if @order_form.save
+      render json: @order_form, serializer: OrderFormSerializer, status: :created, location: @order_form
     else
-      render json: @order.errors, status: :unprocessable_entity
+      render json: @order_form.errors, serializer: OrderFormSerializer, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /orders/1
+  # PATCH/PUT /order_forms/1
   def update
-    if @order.update(order_params)
-      render json: @order
+    if @order_form.update(order_form_params)
+      render json: @order_form
     else
-      render json: @order.errors, status: :unprocessable_entity
+      render json: @order_form.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /orders/1
+  # DELETE /order_forms/1
   def destroy
-    @order.destroy
+    @order_form.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = OrderForm.find(params[:id])
+    def set_order_form
+      @order_form = OrderForm.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
-    def order_params
-      params.permit(:supplier, :user, :product, :reviewer, :time, :number, :remark, :priority, :state)
+    def order_form_params
+      params.require(:order_form).permit(:supplier_id, :user_id , :product_id, :reviewer, :time, :number, :remark, :priority, :state)
+      # params.fetch(:order_form, {})
     end
 end

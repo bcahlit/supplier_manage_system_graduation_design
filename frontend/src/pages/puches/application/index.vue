@@ -5,17 +5,18 @@
         <el-form-item label="产品名" prop="product_name" :label-width="formLabelWidth">
           <el-autocomplete
             class="inline-input"
+            prop="number"
             v-model="productForm.name"
             :fetch-suggestions="querySearch"
             placeholder="请输入内容"
             @select="handleProductNameSelect"
           ></el-autocomplete>
         </el-form-item>
-        <el-form-item label="数量" prop="price" :label-width="formLabelWidth">
-          <el-input v-model="productForm.price" autocomplete="off"></el-input>
+        <el-form-item label="数量" prop="number" :label-width="formLabelWidth">
+          <el-input v-model="productForm.number" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="备注" prop="back_rate" :label-width="formLabelWidth">
-          <el-input v-model="productForm.back_rate" autocomplete="off"></el-input>
+        <el-form-item label="备注" prop="remark" :label-width="formLabelWidth">
+          <el-input v-model="productForm.remark" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -48,7 +49,7 @@
 
       <el-table-column label="产品名" width="120" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          {{scope.row.name}}
+          {{scope.row.product.name}}
         </template>
       </el-table-column>
 
@@ -76,7 +77,7 @@
             <el-button
               size="mini"
               type="info"
-              @click="handleShow(scope.$index, scope.row)">修改</el-button>
+              @click="handleEdit(scope.$index, scope.row)">修改</el-button>
             <el-button
               size="mini"
               type="danger"
@@ -96,10 +97,17 @@
 
 <script>
 
-import { getOrders, updateOrder, deleteOrder } from '@api/salesManager/order/'
+import { getProducts } from '@api/saleSupport/product'
+import { getOrders, addOrder, updateOrder, deleteOrder } from '@api/salesManager/order/'
 export default {
   components: {
     'DemoPageFooter': () => import('@/components/PageFooter')
+  },
+  created () {
+    this.fetchProduct()
+  },
+  activated () {
+    this.fetchProduct()
   },
   data () {
     return {
@@ -157,47 +165,91 @@ export default {
         phone: '',
         selectValue: ''
       },
+      productRules: {
+        name: [ { required: true, message: '请选择产品', trigger: 'change' } ],
+        number: [ { required: true, message: '请输入手机号', trigger: 'change' } ]
+      },
       rules: {
         selectValue: [ { required: true, message: '请输入手机号', trigger: 'change' } ]
       }
     }
   },
   methods: {
-    handleShow (index, row) {
-      this.order_details = row.order_details
-      this.currentOrderId = row.id
-      this.orderDialogVisible = true
-      // console.log(row)
+    cancaleAddproduct () {
+      this.orderDialogVisible = false
+      this.productForm = {}
     },
-    handleDetailBack (index, row) {
-      console.log(row)
-      updateOrderItem({
-        id: row.id,
-        state: 2
+    addProductButton () {
+      this.productForm = {}
+      this.isAddCustom = true
+      this.orderDialogVisible = true
+    },
+    handleProductNameSelect (item) {
+      this.productForm.product_id = item.id
+    },
+    querySearch (queryString, cb) {
+      getProducts({
+        selectType: 'name',
+        selectValue: queryString
       }).then(res => {
-        row.state=2
-        updateOrder({
-          id: this.currentOrderId,
-          state: 2
-        })
+        cb(res.products.map(item => {
+          item.value = item.name
+          return item
+        }))
       })
     },
-    onpick (pick) {
-      console.log(pick[0])
-      console.log(pick[1])
-      console.log(this.form.showedDataValue)
+    AddPorductEvent (){
+      if (this.isAddCustom){
+        this.isAddCustom = false
+        // console.log(this.productForm)
+        delete this.productForm.name
+        addOrder({
+          time: Date.parse( new Date()),
+          user_id: this.$store.state.d2admin.user.info.id,
+          ...this.productForm
+        }).then(res => {
+          this.cancaleAddproduct()
+          // console.log(res)
+        })
+      }
+      if (this.isEdit) {
+        this.isEdit = false
+        delete this.productForm.name
+        updateOrder({
+          user_id: this.$store.state.d2admin.user.info.id,
+          ...this.productForm
+        }).then(res => {
+          this.cancaleAddproduct()
+          // console.log(res)
+        })
+      }
     },
-    handleOrderShow (index, row) {
-      console.log(index, row)
-      this.showDetail = true
-      this.orderDetailForm = this.userTable[index]
+    fetchProduct () {
+      getOrders({
+        state: '0,1',
+        user_id: this.$store.state.d2admin.user.info.id,
+        ...this.page
+        }).then(res => {
+        this.userTable = res.order_forms.map(item => {
+          item.date = new Date(item.time)
+          return item
+        })
+        this.page.pageCurrent = res.meta.currentPage
+        this.page.pageTotal = res.meta.total
+      })
+    },
+    handleEdit (index, row) {
+      this.isEdit = true
+      this.productForm = row
+      this.productForm.name = row.product.name
       this.orderDialogVisible = true
+      // console.log(row)
     },
     handleDelete (index, row) {
       // console.log(index, row)
       deleteOrder({ id: row.id }).then(res => {
-        console.log(res)
-        this.handleFormSubmit()
+        // console.log(res) 
+        this.fetchProduct()
         this.$message({
           message: '删除成功',
           type: 'success'
@@ -216,38 +268,8 @@ export default {
       this.page.current = val.current
       // nextTick 只是为了优化示例中 notify 的显示
       this.$nextTick(() => {
-        this.handleFormSubmit()
+        this.fetchProduct()
       })
-    },
-    handleFormSubmit () {
-      this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          console.log(this.page)
-          // TODO 做一些转换 控制器也要做
-          getOrders({
-            ...this.form,
-            ...this.page
-          }).then(res => {
-            // console.log(res)
-            this.userTable = res.order_forms.map(item => {
-              item.date = new Date(item.time)
-              return item
-            })
-            this.page.pageCurrent = res.meta.currentPage
-            // this.page.pageSize = res.pageSize
-            this.page.pageTotal = res.meta.total
-          })
-        } else {
-          this.$notify.error({
-            title: '错误',
-            message: '表单校验失败'
-          })
-          return false
-        }
-      })
-    },
-    handleFormReset () {
-      this.$refs.form.resetFields()
     },
     handleSupplierNew () {
       this.$notify.error({
