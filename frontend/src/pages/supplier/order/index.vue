@@ -211,7 +211,7 @@ export default {
         id: row.id,
         state: 2
       }).then(res => {
-        row.state=2
+        row.state = 2
         updateOrder({
           id: this.currentOrderId,
           state: 2

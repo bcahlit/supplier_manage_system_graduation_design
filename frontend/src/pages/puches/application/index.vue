@@ -127,40 +127,6 @@ export default {
         pageSize: 10,
         pageTotal: 0
       },
-      pickerOptions: {
-        shortcuts: [{
-          text: '今天',
-          onClick (picker) {
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, start])
-          }
-        }, {
-          text: '最近一周',
-          onClick (picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近一个月',
-          onClick (picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近三个月',
-          onClick (picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }]
-      },
       form: {
         phone: '',
         selectValue: ''
@@ -198,19 +164,17 @@ export default {
         }))
       })
     },
-    AddPorductEvent (){
-      if (this.isAddCustom){
+    AddPorductEvent () {
+      if (this.isAddCustom) {
         this.isAddCustom = false
-        // console.log(this.productForm)
         delete this.productForm.name
         addOrder({
           state: 0,
-          time: Date.parse( new Date()),
+          time: Date.parse(new Date()),
           user_id: this.$store.state.d2admin.user.info.id,
           ...this.productForm
         }).then(res => {
           this.cancaleAddproduct()
-          // console.log(res)
         })
       }
       if (this.isEdit) {
@@ -221,7 +185,6 @@ export default {
           ...this.productForm
         }).then(res => {
           this.cancaleAddproduct()
-          // console.log(res)
         })
       }
     },
@@ -230,7 +193,7 @@ export default {
         state: '0,1',
         user_id: this.$store.state.d2admin.user.info.id,
         ...this.page
-        }).then(res => {
+      }).then(res => {
         this.userTable = res.order_forms.map(item => {
           item.date = new Date(item.time)
           return item
@@ -244,12 +207,10 @@ export default {
       this.productForm = row
       this.productForm.name = row.product.name
       this.orderDialogVisible = true
-      // console.log(row)
     },
     handleDelete (index, row) {
-      // console.log(index, row)
       deleteOrder({ id: row.id }).then(res => {
-        // console.log(res) 
+        // console.log(res)
         this.fetchProduct()
         this.$message({
           message: '删除成功',
