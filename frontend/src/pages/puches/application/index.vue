@@ -204,6 +204,7 @@ export default {
         // console.log(this.productForm)
         delete this.productForm.name
         addOrder({
+          state: 0,
           time: Date.parse( new Date()),
           user_id: this.$store.state.d2admin.user.info.id,
           ...this.productForm
