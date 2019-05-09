@@ -136,7 +136,7 @@
           {{scope.row.zip}}
         </template>
       </el-table-column>
-      
+
       <el-table-column label="银行账户" width="150" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           {{scope.row.bank_number}}
@@ -223,11 +223,11 @@ export default {
     }
   },
   methods: {
-    handleGoProductManage (index, row){
-      this.$store.commit('setSupplier',row);
-      // this.$router.push({ name: 'product_manage', params: { supplier: row }})
+    handleGoProductManage (index, row) {
+      this.$store.commit('setSupplier', row)
+      this.$router.push({ name: 'product_manage' })
     },
-    handleAddDossierButton (){
+    handleAddDossierButton () {
       this.supplierDialogFormVisible = true
       this.isAddCustom = true
     },
