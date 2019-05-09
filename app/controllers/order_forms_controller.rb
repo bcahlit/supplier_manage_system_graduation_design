@@ -8,7 +8,7 @@ class OrderFormsController < ApplicationController
       @order_forms = OrderForm.where(user_id: params[:user_id])
         .where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
     else
-      @order_forms = current_user.order_form.where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
+      @order_forms = OrderForm.where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
     end
 
     render json: @order_forms,
@@ -46,6 +46,13 @@ class OrderFormsController < ApplicationController
     @order_form.destroy
   end
 
+  def product_supplier
+    supplier_ids = SupplierProduct.select('supplier_id').distinct.where(product_id: params[:product_id])
+    suppliers = Supplier.where(id: supplier_ids).page(params[:current] || 1).per(params[:size] || 10)
+
+    render json: suppliers, each_serializer: SupplierSimplifySerializer
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order_form
@@ -54,7 +61,7 @@ class OrderFormsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_form_params
-      params.require(:order_form).permit(:supplier_id, :user_id , :product_id, :reviewer, :time, :number, :remark, :priority, :state)
+      params.require(:order_form).permit(:supplier_id, :total_price, :user_id , :product_id, :reviewer_id, :time, :number, :remark, :priority, :state)
       # params.fetch(:order_form, {})
     end
 end

@@ -1,7 +1,6 @@
 import request from '@/plugin/axios'
 
 export function getOrders (data) {
-  console.log(data)
   return request({
     url: '/order_forms',
     method: 'get',
@@ -27,5 +26,19 @@ export function updateOrder (data) {
     url: `/order_forms/${data.id}`,
     method: 'PATCH',
     data
+  })
+}
+export function getSuppliers (data) {
+  return request({
+    url: '/product_supplier',
+    method: 'get',
+    params: data
+  })
+}
+export function getSupplierProductDetail (data) {
+  return request({
+    url: '/supplier_product_detail',
+    method: 'get',
+    params: data
   })
 }

@@ -45,6 +45,10 @@ class SupplierProductsController < ApplicationController
     @supplier_product.destroy
   end
 
+  def get_detail
+    render json: SupplierProduct.where(supplier_id: params[:supplier_id]).where(product_id: params[:product_id])
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_supplier_product
