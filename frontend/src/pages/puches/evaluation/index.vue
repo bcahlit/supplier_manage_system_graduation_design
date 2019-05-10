@@ -118,16 +118,19 @@ export default {
     }
   },
   methods: {
-    handleCommit () {
+    handleCommit (index, row) {
       this.productForm = {}
       this.orderDialogVisible = true
       this.isCommit = true
+      console.log(row)
+      // addComment({
+      //   supplier_product_id: 
+      // })
     },
     cancaleAddproduct () {
       this.orderDialogVisible = false
       this.productForm = {}
     },
-
     AddPorductEvent () {
       if (this.isCommit){
         this.isCommit = false
