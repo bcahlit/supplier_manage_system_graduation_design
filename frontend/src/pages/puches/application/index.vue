@@ -232,12 +232,6 @@ export default {
       this.$nextTick(() => {
         this.fetchProduct()
       })
-    },
-    handleSupplierNew () {
-      this.$notify.error({
-        title: '错误',
-        message: '表单校验失败'
-      })
     }
   }
 }

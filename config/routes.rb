@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   resources :supplier_products
   resources :products
   resources :order_forms
+  resources :comments
   
 end

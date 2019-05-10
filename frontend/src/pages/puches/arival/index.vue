@@ -54,7 +54,7 @@
 <script>
 
 import { getProducts } from '@api/saleSupport/product'
-import { getOrders, addOrder, updateOrder, deleteOrder } from '@api/salesManager/order/'
+import { getOrders, updateOrder, deleteOrder } from '@api/salesManager/order/'
 export default {
   components: {
     'DemoPageFooter': () => import('@/components/PageFooter')
@@ -101,39 +101,10 @@ export default {
       this.orderDialogVisible = false
       this.productForm = {}
     },
-    addProductButton () {
-      this.productForm = {}
-      this.isAddCustom = true
-      this.orderDialogVisible = true
-    },
-    AddPorductEvent () {
-      if (this.isAddCustom) {
-        this.isAddCustom = false
-        delete this.productForm.name
-        addOrder({
-          state: 0,
-          time: Date.parse(new Date()),
-          user_id: this.$store.state.d2admin.user.info.id,
-          ...this.productForm
-        }).then(res => {
-          this.cancaleAddproduct()
-        })
-      }
-      if (this.isEdit) {
-        this.isEdit = false
-        delete this.productForm.name
-        updateOrder({
-          user_id: this.$store.state.d2admin.user.info.id,
-          ...this.productForm
-        }).then(res => {
-          this.cancaleAddproduct()
-        })
-      }
-    },
     fetchProduct () {
       getOrders({
-        state: '3',
-        user_id: this.$store.state.d2admin.user.info.id,
+        state: 3,
+        // user_id: this.$store.state.d2admin.user.info.id,
         ...this.page
       }).then(res => {
         this.userTable = res.order_forms.map(item => {
@@ -144,19 +115,13 @@ export default {
         this.page.pageTotal = res.meta.total
       })
     },
-    handleEdit (index, row) {
-      this.isEdit = true
-      this.productForm = row
-      this.productForm.name = row.product.name
-      this.orderDialogVisible = true
-    },
     handleDelete (index, row) {
       delete this.productForm.name
       updateOrder({
-        state: 4,
-        ...this.productForm
+        ...row,
+        state: 4
       }).then(res => {
-        this.cancaleAddproduct()
+        // TODO 刷新数据 并且进行提示
       })
     },
     handleSelectFormReset () {

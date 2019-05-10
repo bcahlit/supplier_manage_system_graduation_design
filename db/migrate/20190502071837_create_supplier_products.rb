@@ -1,8 +1,8 @@
 class CreateSupplierProducts < ActiveRecord::Migration[5.2]
   def change
     create_table :supplier_products do |t|
-      t.references :supplier, foreign_key: true
-      t.references :product, foreign_key: true
+      t.references :supplier, foreign_key: true, on_delete: :cascade
+      t.references :product, foreign_key: true, on_delete: :cascade
       t.string :commit
       t.integer :price
       t.integer :back_rate, :default => 0

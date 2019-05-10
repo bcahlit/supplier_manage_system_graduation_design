@@ -186,7 +186,7 @@ export default {
     fetchProduct () {
       getOrders({
         state: '0,2',
-        user_id: this.$store.state.d2admin.user.info.id,
+        // user_id: this.$store.state.d2admin.user.info.id,
         ...this.page
       }).then(res => {
         this.userTable = res.order_forms.map(item => {

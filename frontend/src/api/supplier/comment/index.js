@@ -3,28 +3,28 @@ import request from '@/plugin/axios'
 export function getComments (data) {
   console.log(data)
   return request({
-    url: '/supplier_products',
+    url: '/comments',
     method: 'get',
     params: data
   })
 }
-export function addProduct (data) {
+export function addComment (data) {
   return request({
-    url: '/supplier_products',
+    url: '/comments',
     method: 'post',
     data
   })
 }
-export function deleteProduct (data) {
+export function deleteComment (data) {
   return request({
-    url: `/supplier_products/${data.id}`,
+    url: `/comments/${data.id}`,
     method: 'delete'
   })
 }
-export function updateProduct (data) {
+export function updateComment (data) {
   // let cId=data.id
   return request({
-    url: `/supplier_products/${data.id}`,
+    url: `/comments/${data.id}`,
     method: 'PATCH',
     data
   })
