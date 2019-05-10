@@ -14,7 +14,7 @@ class CreateOrderForms < ActiveRecord::Migration[5.2]
       t.string :remark
       t.integer :priority, :null => false, :default => 0
       t.integer :state, :default => 0
-      #Ex:- :default =>''状态 0：申请 1：拒绝 2批准  3 已经生成合同 4:退货
+      #Ex:- :default =>''状态 0：申请 1：拒绝 2批准  3 已经生成订单 4 已到货 5:已评价 6 订单完成 7 已退货
       
       t.timestamps
     end
