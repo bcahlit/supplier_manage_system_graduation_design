@@ -321,15 +321,6 @@ export default {
           return false
         }
       })
-    },
-    handleFormReset () {
-      this.$refs.form.resetFields()
-    },
-    handleSupplierNew () {
-      this.$notify.error({
-        title: '错误',
-        message: '表单校验失败'
-      })
     }
   }
 }
