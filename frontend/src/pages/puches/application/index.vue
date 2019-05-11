@@ -180,8 +180,8 @@ export default {
       if (this.isEdit) {
         this.isEdit = false
         delete this.productForm.name
+        this.productForm.state = 0
         updateOrder({
-          user_id: this.$store.state.d2admin.user.info.id,
           ...this.productForm
         }).then(res => {
           this.cancaleAddproduct()
