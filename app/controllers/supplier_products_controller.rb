@@ -3,7 +3,7 @@ class SupplierProductsController < ApplicationController
 
   # GET /supplier_products
   def index
-    if params[:supplier]
+    if params[:supplier_id]
       @supplier_products = Supplier.find(params[:supplier_id]).supplier_products.page(params[:current] || 1).per(params[:size] || 10)
     elsif params[:supplier_name]
       @supplier_products = Supplier.find_by(name: params[:supplier_name]).supplier_products.page(params[:current] || 1).per(params[:size] || 10)

@@ -30,6 +30,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column label="公司名" width="120" :show-overflow-tooltip="true">
+        <template slot-scope="scope">
+          {{scope.row.supplier.name}}
+        </template>
+      </el-table-column>
+
       <el-table-column label="发起时间" width="120" align="center">
         <template slot-scope="scope">
             {{scope.row.date | date_format('YYYY-M-D')}}
@@ -88,6 +94,7 @@ export default {
   },
   data () {
     return {
+      currentRow: {},
       productForm: {},
       innerVisible: false,
       order_details: {},
@@ -119,10 +126,11 @@ export default {
   },
   methods: {
     handleCommit (index, row) {
-      this.productForm = {}
+      // this.productForm = row.comment
+      this.currentRow = row
       this.orderDialogVisible = true
       this.isCommit = true
-      console.log(row)
+      // console.log(row)
       // addComment({
       //   supplier_product_id: 
       // })
@@ -132,17 +140,32 @@ export default {
       this.productForm = {}
     },
     AddPorductEvent () {
+      // console.log(this.row)
       if (this.isCommit){
         this.isCommit = false
-        // addComment
-        // updateOrder
+        // console.log(this.currentRow)
+        addComment({
+          order_form_id: this.currentRow.id,
+          supplier_product_id: this.currentRow.supplier_prodect,
+          ...this.productForm
+        })
+        delete this.productForm.name
+        updateOrder({
+          id: this.currentRow.id,
+          state:5
+        }).then(res => {
+          this.cancaleAddproduct()
+        })
       }
       if (this.isEdit) {
         this.isEdit = false
+        addComment({
+          ...this.productForm
+        })
         delete this.productForm.name
         updateOrder({
-          user_id: this.$store.state.d2admin.user.info.id,
-          ...this.productForm
+          id: this.currentRow.id,
+          state:5
         }).then(res => {
           this.cancaleAddproduct()
         })
@@ -163,10 +186,10 @@ export default {
       })
     },
     handleEdit (index, row) {
-      // 获取产品的时候顺便获取评论
-      this.isEdit = true
-      this.productForm = row
+      this.productForm = row.comment
+      this.currentRow = row
       this.orderDialogVisible = true
+      this.isEdit = true
     },
     handleSelectFormReset () {
       this.$refs['ruleForm'].resetFields()
