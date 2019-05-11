@@ -48,6 +48,7 @@ class OrderFormsController < ApplicationController
 
   def product_supplier
     supplier_ids = SupplierProduct.select('supplier_id').distinct.where(product_id: params[:product_id])
+    # logger.debug supplier_ids
     suppliers = Supplier.where(id: supplier_ids).page(params[:current] || 1).per(params[:size] || 10)
 
     render json: suppliers, each_serializer: SupplierSimplifySerializer

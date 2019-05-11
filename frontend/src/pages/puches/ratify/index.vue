@@ -138,6 +138,7 @@ export default {
     handleGenerateOrder (index, row) {
       this.orderDialogVisible = true
       this.product = row
+      // console.log(this.product)
     },
     cancaleAddproduct () {
       this.orderDialogVisible = false
@@ -150,32 +151,31 @@ export default {
     },
     handleProductNameSelect (item) {
       this.productForm.product_id = item.id
+      getSupplierProductDetail({
+          product_id: this.product.product.id,
+          supplier_id: item.id
+        }).then(spres => {
+          this.currentProduct = spres.supplier_products[0]
+          this.currentProduct.totalPrice = this.currentProduct.price * this.product.number
+        })
     },
     querySearch (queryString, cb) {
       // console.log(cb)
       getSuppliers({
-        product_id: this.product.id
+        product_id: this.product.product.id
       }).then(res => {
         console.log(res)
         cb(res.suppliers.map(item => {
           item.value = item.name
           return item
         }))
-        getSupplierProductDetail({
-          product_id: this.product.id,
-          supplier_id: res.suppliers[0].id
-        }).then(spres => {
-          this.currentProduct = spres.supplier_products[0]
-          this.currentProduct.totalPrice = this.currentProduct.price * this.product.number
-        })
       })
     },
     AddPorductEvent () {
       updateOrder({
         id: this.product.id,
         state: 3,
-        supplier_id: this.currentProduct.id,
-        reviewer_id: this.$store.state.d2admin.user.info.id,
+        supplier_id: this.productForm.product_id,
         total_price: this.currentProduct.totalPrice
       }).then(res => {
         this.orderDialogVisible = false

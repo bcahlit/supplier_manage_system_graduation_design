@@ -13,6 +13,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column label="公司名" width="120" :show-overflow-tooltip="true">
+        <template slot-scope="scope">
+          {{scope.row.supplier.name}}
+        </template>
+      </el-table-column>
+      
       <el-table-column label="发起时间" width="120" align="center">
         <template slot-scope="scope">
             {{scope.row.date | date_format('YYYY-M-D')}}
