@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  rolify
+  # resourcify
   has_secure_password
   has_many :notes
   has_many :schedule

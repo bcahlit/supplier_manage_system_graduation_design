@@ -29,8 +29,8 @@ export default [
     children: [
       { path: '/supplier/dossier', title: '档案管理', icon: 'file-text' },
       { path: '/supplier/order', title: '订单管理', icon: 'first-order' },
-      { path: '/supplier/product_manage', title: '产品管理', icon: 'product-hunt' },
-      { path: '/supplier/quality_evaluation', title: '质量管理', icon: 'gg-circle' }
+      { path: '/supplier/product_manage', title: '产品管理', icon: 'product-hunt' }
+      // { path: '/supplier/quality_evaluation', title: '质量管理', icon: 'gg-circle' }
     ]
   },
   {
