@@ -18,7 +18,7 @@
           {{scope.row.supplier.name}}
         </template>
       </el-table-column>
-      
+
       <el-table-column label="发起时间" width="120" align="center">
         <template slot-scope="scope">
             {{scope.row.date | date_format('YYYY-M-D')}}
@@ -59,8 +59,7 @@
 
 <script>
 
-import { getProducts } from '@api/saleSupport/product'
-import { getOrders, updateOrder, deleteOrder } from '@api/salesManager/order/'
+import { getOrders, updateOrder } from '@api/salesManager/order/'
 export default {
   components: {
     'DemoPageFooter': () => import('@/components/PageFooter')

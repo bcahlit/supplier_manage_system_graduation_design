@@ -152,12 +152,12 @@ export default {
     handleProductNameSelect (item) {
       this.productForm.product_id = item.id
       getSupplierProductDetail({
-          product_id: this.product.product.id,
-          supplier_id: item.id
-        }).then(spres => {
-          this.currentProduct = spres.supplier_products[0]
-          this.currentProduct.totalPrice = this.currentProduct.price * this.product.number
-        })
+        product_id: this.product.product.id,
+        supplier_id: item.id
+      }).then(spres => {
+        this.currentProduct = spres.supplier_products[0]
+        this.currentProduct.totalPrice = this.currentProduct.price * this.product.number
+      })
     },
     querySearch (queryString, cb) {
       // console.log(cb)

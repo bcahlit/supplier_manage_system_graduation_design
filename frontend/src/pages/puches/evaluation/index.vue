@@ -130,10 +130,6 @@ export default {
       this.currentRow = row
       this.orderDialogVisible = true
       this.isCommit = true
-      // console.log(row)
-      // addComment({
-      //   supplier_product_id: 
-      // })
     },
     cancaleAddproduct () {
       this.orderDialogVisible = false
@@ -141,7 +137,7 @@ export default {
     },
     AddPorductEvent () {
       // console.log(this.row)
-      if (this.isCommit){
+      if (this.isCommit) {
         this.isCommit = false
         // console.log(this.currentRow)
         addComment({
@@ -152,22 +148,15 @@ export default {
         delete this.productForm.name
         updateOrder({
           id: this.currentRow.id,
-          state:5
+          state: 5
         }).then(res => {
           this.cancaleAddproduct()
         })
       }
       if (this.isEdit) {
         this.isEdit = false
-        addComment({
+        updateComment({
           ...this.productForm
-        })
-        delete this.productForm.name
-        updateOrder({
-          id: this.currentRow.id,
-          state:5
-        }).then(res => {
-          this.cancaleAddproduct()
         })
       }
     },

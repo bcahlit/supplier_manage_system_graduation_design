@@ -120,7 +120,7 @@
 
 import { addComment, updateComment } from '@api/supplier/comment/'
 import { getSuppliers } from '@api/salesManager/supplier'
-import { getOrders, updateOrder, getSupplierProductDetail } from '@api/salesManager/order/'
+import { getOrders, updateOrder } from '@api/salesManager/order/'
 export default {
   components: {
     'DemoPageFooter': () => import('@/components/PageFooter')
@@ -162,7 +162,7 @@ export default {
     handleGenerateOrder (index, row) {
       this.orderDialogVisible = true
       this.product = row
-      if (row.comment){
+      if (row.comment) {
         this.commentForm = row.comment
         this.isEdit = true
       }
@@ -196,19 +196,18 @@ export default {
       })
     },
     AddCommenttEvent () {
-      if (this.isEdit){
+      if (this.isEdit) {
         updateComment({
           ...this.commentForm
         })
-      }
-      else {
+      } else {
         addComment({
           order_form_id: this.product.id,
           supplier_product_id: this.product.supplier_prodect,
           ...this.commentForm
         })
       }
-      if (this.product.state == 4){
+      if (this.product.state === 4) {
         updateOrder({
           id: this.product.id,
           state: 5
