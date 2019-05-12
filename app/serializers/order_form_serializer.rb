@@ -5,7 +5,7 @@ class OrderFormSerializer < ActiveModel::Serializer
   belongs_to :product, serializer: ProductSimplifySerializer
 
   def comment
-    Comment.find_by(order_form_id: :id)
+    Comment.find_by(order_form_id: object.id)
   end
 
   def supplier

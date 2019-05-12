@@ -7,6 +7,13 @@ class OrderFormsController < ApplicationController
     if params[:user_id]
       @order_forms = OrderForm.where(user_id: params[:user_id])
         .where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
+    elsif params[:supplier_id]
+      @order_forms = OrderForm.where(supplier_id: params[:supplier_id])
+        .where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
+    elsif params[:supplier_name]
+      supplier_id = Supplier.select('id').find_by(name: params[:supplier_name])
+      @order_forms = OrderForm.where(supplier_id: supplier_id)
+        .where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
     else
       @order_forms = OrderForm.where(state: params[:state].split(",")).order(time: :asc).page(params[:current] || 1).per(params[:size] || 10)
     end
@@ -62,7 +69,7 @@ class OrderFormsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_form_params
-      params.require(:order_form).permit(:supplier_id, :total_price, :user_id , :product_id, :reviewer_id, :time, :number, :remark, :priority, :state)
+      params.require(:order_form).permit(:supplier_name, :supplier_id, :total_price, :user_id , :product_id, :reviewer_id, :time, :number, :remark, :priority, :state)
       # params.fetch(:order_form, {})
     end
 end
