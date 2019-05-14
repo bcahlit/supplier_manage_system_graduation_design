@@ -157,9 +157,6 @@ export default {
     submit () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          // 登录
-          // 注意 这里的演示没有传验证码
-          // 具体需要传递的数据请自行修改代码
           this.login({
             vm: this,
             username: this.formLogin.username,
@@ -170,7 +167,7 @@ export default {
                 .then(res => {
                   let uName = res.user.user_name
                   // delete res.user_name
-                  console.log(uName)
+                  console.log('userInfo', res)
                   this.$store.dispatch('d2admin/user/set', {
                     name: uName,
                     ...res.user
