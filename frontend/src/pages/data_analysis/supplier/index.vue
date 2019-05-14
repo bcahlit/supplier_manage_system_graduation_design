@@ -47,20 +47,20 @@
 import { getOrderNumberBySypplier, getOrderNumberByTime } from '@api/dataShow'
 
 export default {
-  created() {
+  created () {
     this.fetchProduct()
   },
-  activated() {
+  activated () {
     this.fetchProduct()
   },
-  data() {
+  data () {
     return {
       orderNumberChartData: {
-        columns: ["supplier", "number"],
+        columns: ['supplier', 'number'],
         rows: []
       },
       OrderTimeChartData: {
-        columns: ['data', 'number',''],
+        columns: ['data', 'number', ''],
         rows: []
       }
     }
@@ -74,7 +74,7 @@ export default {
         console.log(res)
         this.OrderTimeChartData.rows = res.map(item => {
           let data = new Date(item.time)
-          item.data = data.getFullYear()+'/'+(data.getMonth()+1)
+          item.data = data.getFullYear() + '/' + (data.getMonth() + 1)
           return item
         })
       })

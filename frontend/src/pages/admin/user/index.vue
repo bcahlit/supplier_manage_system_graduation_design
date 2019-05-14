@@ -175,24 +175,6 @@ export default {
     })
   },
   data () {
-    var validatePas =  (rule, value, callback) => {
-	    if (!value) {
-		    callback(new Error('请输入新密码'));
-			} else if (value.toString().length < 6 || value.toString().length > 18) {
-				callback(new Error('密码长度为6 - 18个字符'))
-		  } else {
-				callback();
-			}
-		}
-		var validatePass2 = (rule, value, callback) => {
-	    if (value === '') {
-	      callback(new Error('请再次输入密码'));
-	    } else if (value !== this.userForm.password) {
-	      callback(new Error('两次输入密码不一致!'));
-	    } else {
-	      callback()
-	    }
-    }
     return {
       userDialogFormVisible: false,
       formLabelWidth: '120px',
