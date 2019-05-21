@@ -4,7 +4,12 @@ class SuppliersController < ApplicationController
   # GET /suppliers
   def index
     # todo: 如果有排序 增加排序功能 还有按其他方式选择
-    if params[:selectValue]
+    if params[:selectType] == "product"
+      product_id = Product.select('id').where("name LIKE ?", '%'+params[:selectValue]+'%')
+      supplier_ids = SupplierProduct.select('supplier_id').distinct.where(product_id: product_id)
+      # logger.debug supplier_ids
+      @suppliers = Supplier.where(id: supplier_ids).page(params[:current] || 1).per(params[:size] || 10)
+    elsif params[:selectValue]
       value = params[:selectValue]
       type = params[:selectType]
       @suppliers = Supplier.where("#{type} LIKE ?", '%'+value+'%').page(params[:current] || 1).per(params[:size] || 10)

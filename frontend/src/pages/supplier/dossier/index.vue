@@ -59,6 +59,7 @@
           <el-option label="供应商名称" value='name'></el-option>
           <el-option label="联系人姓名" value='concat'></el-option>
           <el-option label="供应商地址" value='address'></el-option>
+          <el-option label="产品名称" value='product'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item prop="phone">
