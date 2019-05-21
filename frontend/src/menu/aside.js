@@ -41,6 +41,7 @@ export default [
       { path: '/puches/ratify', title: '审批', icon: 'paint-brush' },
       { path: '/puches/product', title: '产品库管理', icon: 'product-hunt' },
       { path: '/puches/arival', title: '到货情况', icon: 'bar-chart' },
+      { path: '/puches/pushin', title: '进货需求', icon: 'shopping-cart' },
       { path: '/puches/evaluation', title: '评价', icon: 'share' }
     ]
   }

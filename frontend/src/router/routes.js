@@ -126,6 +126,7 @@ const frameIn = [
       { path: 'ratify', name: `ratify`, component: () => import('@/pages/puches/ratify'), meta: { auth: true, title: '审批' } },
       { path: 'product', name: `product`, component: () => import('@/pages/puches/product'), meta: { auth: true, title: '产品库管理' } },
       { path: 'arival', name: `arival`, component: () => import('@/pages/puches/arival'), meta: { auth: true, title: '到货情况' } },
+      { path: 'pushin', name: `pushin`, component: () => import('@/pages/puches/pushin'), meta: { auth: true, title: '进货需求' } },
       { path: 'evaluation', name: `evaluation`, component: () => import('@/pages/puches/evaluation'), meta: { auth: true, title: '评价' } }
     ]
   }

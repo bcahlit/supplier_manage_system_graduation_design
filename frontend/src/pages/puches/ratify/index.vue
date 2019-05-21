@@ -174,7 +174,7 @@ export default {
     AddPorductEvent () {
       updateOrder({
         id: this.product.id,
-        state: 3,
+        state: 8,
         supplier_id: this.productForm.product_id,
         total_price: this.currentProduct.totalPrice
       }).then(res => {
