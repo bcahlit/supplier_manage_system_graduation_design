@@ -1,10 +1,11 @@
 <template>
   <div class="page-login">
-    <div class="page-login--layer page-login--layer-area">
+    <!-- <div class="page-login--layer page-login--layer-area">
       <ul class="circles">
         <li v-for="n in 10" :key="n"></li>
       </ul>
-    </div>
+    </div> -->
+    <!-- TODO plan picture -->
     <div
       class="page-login--layer page-login--layer-time"
       flex="main:center cross:center">
@@ -23,7 +24,8 @@
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <h1>航空公司客户资源管理系统</h1>
+          <!-- <img class="page-login--logo" src="./image/logo@2x.png"> -->
           <!-- 表单 -->
           <div class="page-login--form">
             <el-card shadow="never">
@@ -191,6 +193,10 @@ export default {
   @extend %unable-select;
   $backgroundColor: #F0F2F5;
   // ---
+  background-image: url(/image/login3.jpg);
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-position: center;
   background-color: $backgroundColor;
   height: 100%;
   position: relative;
@@ -198,6 +204,7 @@ export default {
   .page-login--layer {
     @extend %full;
     overflow: auto;
+    background: hsla(0,0%,100%,.3);
   }
   .page-login--layer-area {
     overflow: hidden;
