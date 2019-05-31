@@ -192,9 +192,8 @@ export default {
 .page-login {
   @extend %unable-select;
   $backgroundColor: #F0F2F5;
-  // ---
   background-image: url(/image/login3.jpg);
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-color: $backgroundColor;
