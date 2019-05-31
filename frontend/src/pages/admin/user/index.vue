@@ -14,8 +14,11 @@
         <el-form-item label="角色" :label-width="formLabelWidth">
           <el-select style="width: 120px;" v-model="userForm.role">
             <el-option label="管理员" value='admin'></el-option>
-            <el-option label="采购员" value='purchase'></el-option>
+            <el-option label="采购员" value='pusher'></el-option>
             <el-option label="验收员" value='ratify'></el-option>
+            <el-option label="统计员" value='statistic'></el-option>
+            <el-option label="进货员" value='pushin'></el-option>
+            <el-option label="仓库管理" value='warehouse'></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
