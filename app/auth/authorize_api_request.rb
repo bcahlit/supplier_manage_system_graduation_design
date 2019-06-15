@@ -11,9 +11,7 @@ class AuthorizeApiRequest
   end
 
   private
-
   attr_reader :headers
-
   def user
     # check if user is in the database
     # memoize user object

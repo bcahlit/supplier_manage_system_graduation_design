@@ -132,18 +132,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="邮编" width="60" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
-          {{scope.row.zip}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="银行账户" width="150" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
-          {{scope.row.bank_number}}
-        </template>
-      </el-table-column>
-
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button-group>
