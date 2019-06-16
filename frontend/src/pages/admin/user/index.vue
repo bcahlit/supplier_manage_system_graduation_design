@@ -209,6 +209,7 @@ export default {
     handleAddDossierButton () {
       this.userDialogFormVisible = true
       this.isAddCustom = true
+      this.userForm = {}
     },
     handleShow (index, row) {
       // console.log(index, row)
@@ -236,9 +237,11 @@ export default {
     cancaleAddUser () {
       this.$refs['userForm'].resetFields()
       this.userDialogFormVisible = false
+      this.userForm = {}
     },
     handleSelectFormReset () {
       this.$refs['ruleForm'].resetFields()
+      this.userForm = {}
     },
     AddUserEvent () {
       if (this.showDetail) {

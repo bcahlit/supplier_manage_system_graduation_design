@@ -23,9 +23,11 @@ class UsersController < ApplicationController
   end
 
   def create
+    role = user_params[:role]
+    user_params_create = user_params.delete(:role)
     user = User.create!(user_params)
     auth_token = AuthenticateUser.new(user.user_name, user.password).call
-    user.add_role params[:role]
+    user.add_role role
     response = { message: Message.account_created, auth_token: auth_token }
     json_response(response, :created)
   end
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       if(@user.roles[0]) then
-        @user.remove_role @user.roles[0].name\
+        @user.remove_role @user.roles[0].name
       end
       @user.add_role params[:role]
       render json: @user

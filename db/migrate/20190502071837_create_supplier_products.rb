@@ -4,10 +4,10 @@ class CreateSupplierProducts < ActiveRecord::Migration[5.2]
       t.references :supplier, foreign_key: true, on_delete: :cascade
       t.references :product, foreign_key: true, on_delete: :cascade
       t.string :commit
-      t.integer :price
-      t.integer :back_rate, :default => 0
+      t.integer :price, :limit => 8, :limit => 8
+      t.integer :back_rate, :default => 0, :limit => 8
       #Ex:- :default =>''
-      t.integer :standard, :default => 100
+      t.integer :standard, :default => 100, :limit => 8
       #Ex:- :default =>''
 
       t.timestamps

@@ -10,10 +10,10 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :title
       t.string :phone, :null => false
       #Ex:- :null => false
-      t.integer :level, :default => 0
+      t.integer :level, :default => 0, :limit => 8
       #Ex:- :default =>''
       t.string :sex
-
+      t.string :role
       t.timestamps
     end
   end
