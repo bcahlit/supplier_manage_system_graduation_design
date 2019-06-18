@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_144954) do
     t.string "phone", null: false
     t.bigint "level", default: 0
     t.string "sex"
+    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

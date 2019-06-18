@@ -2,8 +2,8 @@
 INSERT INTO "users_roles" (user_id,role_id) VALUES (1,1);
 INSERT INTO "users_roles" (user_id,role_id) VALUES (2,1);
 
-INSERT INTO "users" (id,user_name,qq,wechat,real_name,password_digest,title,phone,level,sex,created_at,updated_at) VALUES (1,'admin',NULL,'2qeaew',NULL,'$2a$10$tkmzdjdnfxXPJq5DW.PJ8eIjpymynrr0z7o97ahv/zbGB2pvDLDxi',NULL,'18766653491',0,NULL,'2019-05-05 11:39:08.387498','2019-05-13 11:45:48.258422');
-INSERT INTO "users" (id,user_name,qq,wechat,real_name,password_digest,title,phone,level,sex,created_at,updated_at) VALUES (2,'vhhis',NULL,NULL,'zhong','$2a$10$8DW7Gj7pYnXyYj2op7SYBe6mkcVOAIE3EcUH6Bvgc23fpPEOwUsO6',NULL,'2435664452',0,NULL,'2019-05-13 13:49:35.535280','2019-05-13 13:49:35.535280');
+INSERT INTO "users" (id,role,user_name,qq,wechat,real_name,password_digest,title,phone,level,sex,created_at,updated_at) VALUES ~(1,'admin','admin',NULL,'2qeaew',NULL,'$2a$10$tkmzdjdnfxXPJq5DW.PJ8eIjpymynrr0z7o97ahv/zbGB2pvDLDxi',NULL,'18766653491',0,NULL,'2019-05-05 11:39:08.387498','2019-05-13 11:45:48.258422');
+INSERT INTO "users" (id,role,user_name,qq,wechat,real_name,password_digest,title,phone,level,sex,created_at,updated_at) VALUES (2,'vhhis','admin',NULL,NULL,'zhong','$2a$10$8DW7Gj7pYnXyYj2op7SYBe6mkcVOAIE3EcUH6Bvgc23fpPEOwUsO6',NULL,'2435664452',0,NULL,'2019-05-13 13:49:35.535280','2019-05-13 13:49:35.535280');
 
 INSERT INTO "suppliers" (id,phone,name,type,address,level,email,state,concat,zip,bank_number,reputation,fax,remark,timely,aftersales,componiship,created_at,updated_at) VALUES (1,'18348959412','托福食品公司',NULL,'惠民县',0,'antoniaullrich@simonis.net',0,'Monte Gaylord',NULL,NULL,100,NULL,NULL,100,100,100,'2019-05-05 11:39:09.085010','2019-05-05 11:39:09.085010');
 INSERT INTO "suppliers" (id,phone,name,type,address,level,email,state,concat,zip,bank_number,reputation,fax,remark,timely,aftersales,componiship,created_at,updated_at) VALUES (2,'18118101739','华晟食品公司',NULL,'邹平县',0,'ninfa@croninschuppe.net',0,'Alden Johns',NULL,NULL,100,NULL,NULL,100,100,100,'2019-05-05 11:39:09.090641','2019-05-05 11:39:09.090641');
